@@ -1,3 +1,8 @@
 import { Routes } from '@angular/router';
+import { SearchCityComponent } from './search-city/search-city.component';
+import { CityDetailsComponent } from './city-details/city-details.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  { path: '', component: SearchCityComponent }, 
+  { path: 'city/:name', component: CityDetailsComponent } 
+];
