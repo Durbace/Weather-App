@@ -18,7 +18,7 @@ import { ChartModule } from 'primeng/chart';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class WeatherHomeComponent {
+export class HomepageComponent {
   chartData = {
     labels: ['13 Mar', '14 Mar', '15 Mar', '16 Mar', '17 Mar', '18 Mar', '19 Mar', '20 Mar'],
     datasets: [
