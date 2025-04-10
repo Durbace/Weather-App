@@ -1,0 +1,40 @@
+<aside class="sidebar">
+    <div class="menu">
+      <i class="pi pi-home"></i>
+      <span>Home</span>
+    </div>
+    <div class="user-info">
+      <i class="pi pi-user"></i>
+      <span>Hello, User</span>
+    </div>
+  </aside>
+  
+  <main class="main-content">
+    <!-- <div class="search-bar">
+      <input type="text" pInputText placeholder="Search here..." />
+      <button pButton icon="pi pi-search" class="p-button-text"></button>
+    </div> -->
+  
+    <section class="location-card">
+      <div class="location-image">
+        <img src="assets/bucharest.jpg" alt="Bucuresti" />
+        <div class="location-text">
+          <span class="current-location">Current Location</span>
+          <h2>Bucuresti</h2>
+        </div>
+      </div>
+    </section>
+  
+    <section class="highlight-section">
+      <h3>Today's highlight</h3>
+      <div class="highlight-cards">
+        <p-card header="Temperature card"></p-card>
+        <p-card header="Precipitation (rain + showers + snow)"></p-card>
+        <p-card header="Precipitation Probability"></p-card>
+        <p-card header="Visibility"></p-card>
+        <p-card header="UV index"></p-card>
+        <p-card header="Apparent Temperature"></p-card>
+      </div>
+      <p-chart type="line" [data]="chartData"></p-chart>
+    </section>
+  </main>
