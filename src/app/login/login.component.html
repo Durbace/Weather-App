@@ -1,0 +1,32 @@
+<div class="auth-container">
+    <h2>Welcome Back</h2>
+  
+    <p *ngIf="registeredMessage" class="success-msg">
+      ✅ Account created successfully. Please log in.
+    </p>
+  
+    <form (ngSubmit)="onLogin()" class="auth-form">
+      <input
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        placeholder="📧 Email address"
+        required
+      />
+      <input
+        [(ngModel)]="password"
+        name="password"
+        type="password"
+        placeholder="🔒 Password"
+        required
+      />
+      <button type="submit">Log In</button>
+    </form>
+  
+    <p *ngIf="error" class="error-msg">⚠️ {{ error }}</p>
+    <p class="switch-link">
+      Don't have an account?
+      <a routerLink="/signup">Create one</a>
+    </p>
+  </div>
+  

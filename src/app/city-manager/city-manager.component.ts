@@ -53,11 +53,6 @@ export class CityManagerComponent implements OnInit {
       this.cities = data;
       this.filterCities();
     });
-
-    const saved = localStorage.getItem('cities');
-    if (saved) {
-      this.cityService.loadFromStorage(JSON.parse(saved));
-    }
   }
 
   addCity(): void {
@@ -70,27 +65,8 @@ export class CityManagerComponent implements OnInit {
     }
   }
 
-  editCity(city: City): void {
-    this.editMode = true;
-    this.selectedCity = city;
-    this.cityForm.patchValue({ name: city.name });
-  }
-
-  updateCity(): void {
-    if (this.cityForm.valid && this.selectedCity) {
-      this.cityService.updateCity(this.selectedCity.id, this.cityForm.value.name);
-      this.cancelEdit();
-    }
-  }
-
   deleteCity(city: City): void {
     this.cityService.deleteCity(city.id);
-  }
-
-  cancelEdit(): void {
-    this.editMode = false;
-    this.selectedCity = null;
-    this.cityForm.reset();
   }
 
   filterCities(): void {

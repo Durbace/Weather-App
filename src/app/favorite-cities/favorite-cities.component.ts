@@ -1,10 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { forkJoin, interval, Observable, Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { forkJoin, interval, Observable, Subject, firstValueFrom } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
 import { WeatherService } from '../services/weather.service';
+import { collection, getDocs, Firestore, query, where, deleteDoc, doc } from '@angular/fire/firestore';
+import { Auth, authState } from '@angular/fire/auth';
 
 interface FavoriteCityWeather {
   name: string;
@@ -26,7 +28,10 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
   favoriteCities: FavoriteCityWeather[] = [];
   private stopPolling$ = new Subject<void>();
 
-  constructor(private weatherService: WeatherService, private router: Router) {}
+  private weatherService = inject(WeatherService);
+  private router = inject(Router);
+  private firestore = inject(Firestore);
+  private auth = inject(Auth);
 
   ngOnInit(): void {
     this.loadFavoriteCities();
@@ -44,17 +49,23 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
     this.stopPolling$.complete();
   }
 
-  private loadFavoriteCities(): void {
-    const saved = localStorage.getItem('favoriteCities');
-    const cityData = saved ? JSON.parse(saved) : [];
-  
-    const observables = cityData.map((city: any) => {
-      return this.weatherService.getCurrentWeather(city.latitude, city.longitude).pipe(
+  private async loadFavoriteCities(): Promise<void> {
+    const user = await firstValueFrom(authState(this.auth));
+    if (!user) return;
+
+    const uid = user.uid;
+    const favRef = collection(this.firestore, `users/${uid}/favorites`);
+    const snapshot = await getDocs(favRef);
+
+    const cities: any[] = [];
+    snapshot.forEach(doc => cities.push(doc.data()));
+
+    const observables = cities.map((city: any) =>
+      this.weatherService.getCurrentWeather(city.latitude, city.longitude).pipe(
         map(data => {
           const current = data.current_weather;
-          const weatherCode = current.weathercode;
-          const weather = this.weatherService.getWeatherIcon(weatherCode || 0);
-  
+          const weather = this.weatherService.getWeatherIcon(current.weathercode || 0);
+
           return {
             name: city.name,
             temperature: Math.round(current.temperature),
@@ -64,43 +75,47 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
             longitude: city.longitude
           };
         })
-      );
-    });
-  
+      )
+    );
+
     forkJoin<FavoriteCityWeather[]>(observables).subscribe(results => {
       this.favoriteCities = results;
     });
-    
   }
-  
+
   private updateWeatherData(): Observable<void> {
     const weatherObservables = this.favoriteCities.map(city =>
       this.weatherService.getCurrentWeather(city.latitude, city.longitude).pipe(
         map(data => {
           const current = data.current_weather;
-          const weatherCode = current.weathercode;
-          const weather = this.weatherService.getWeatherIcon(weatherCode || 0);
-  
+          const weather = this.weatherService.getWeatherIcon(current.weathercode || 0);
           city.temperature = Math.round(current.temperature);
           city.weatherLabel = weather.label;
           city.icon = weather.icon;
         })
       )
     );
-  
+
     return forkJoin(weatherObservables).pipe(map(() => {}));
   }
 
-  removeCity(cityName: string): void {
+  async removeCity(cityName: string): Promise<void> {
+    const user = await firstValueFrom(authState(this.auth));
+    if (!user) return;
+
+    const uid = user.uid;
+    const favRef = collection(this.firestore, `users/${uid}/favorites`);
+    const snapshot = await getDocs(query(favRef, where('name', '==', cityName)));
+
+    snapshot.forEach(docSnap => {
+      const docRef = doc(this.firestore, `users/${uid}/favorites/${docSnap.id}`);
+      deleteDoc(docRef);
+    });
+
     this.favoriteCities = this.favoriteCities.filter(c => c.name !== cityName);
-    const saved = localStorage.getItem('favoriteCities');
-    const favorites = saved ? JSON.parse(saved) : [];
-    const updated = favorites.filter((fav: any) => fav.name !== cityName);
-    localStorage.setItem('favoriteCities', JSON.stringify(updated));
   }
-  
+
   goToCity(cityName: string): void {
     this.router.navigate(['/city', cityName]);
   }
-
 }

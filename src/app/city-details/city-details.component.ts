@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { WeatherService } from '../services/weather.service';
+import { Auth } from '@angular/fire/auth';
+import { Firestore, collection, addDoc, deleteDoc, doc, getDocs, query, where } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-city-details',
@@ -31,7 +33,9 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private firestore: Firestore,
+    private auth: Auth
   ) {}
 
   ngOnInit() {
@@ -135,37 +139,37 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
   }
   
   toggleFavorite(): void {
-    const saved = localStorage.getItem('favoriteCities');
-    let favorites: any[] = saved ? JSON.parse(saved) : [];
+    const uid = this.auth.currentUser?.uid;
+    if (!uid) return;
   
-    favorites = favorites.filter(fav => typeof fav === 'object' && fav.name);
+    const favRef = collection(this.firestore, `users/${uid}/favorites`);
   
     if (this.isFavorite) {
-      favorites = favorites.filter(fav => fav.name !== this.cityName);
-    } else {
-      const alreadyExists = favorites.some(fav => fav.name === this.cityName);
-      if (!alreadyExists && this.latitude && this.longitude) {
-        favorites.push({
-          name: this.cityName,
-          latitude: this.latitude,
-          longitude: this.longitude,
+      getDocs(query(favRef, where('name', '==', this.cityName))).then(snapshot => {
+        snapshot.forEach(docSnap => {
+          const docRef = doc(this.firestore, `users/${uid}/favorites/${docSnap.id}`);
+          deleteDoc(docRef);
         });
-      }
+      });
+    } else {
+      addDoc(favRef, {
+        name: this.cityName,
+        latitude: this.latitude,
+        longitude: this.longitude,
+      });
     }
   
-    localStorage.setItem('favoriteCities', JSON.stringify(favorites));
     this.isFavorite = !this.isFavorite;
   }
   
   
-  
   checkIfFavorite(): void {
-    const saved = localStorage.getItem('favoriteCities');
-    const favorites: any[] = saved ? JSON.parse(saved) : [];
-    this.isFavorite = favorites.some(fav => 
-      typeof fav === 'object' && fav.name === this.cityName
-    );
+    const uid = this.auth.currentUser?.uid;
+    if (!uid) return;
+  
+    const favRef = collection(this.firestore, `users/${uid}/favorites`);
+    getDocs(query(favRef, where('name', '==', this.cityName))).then(snapshot => {
+      this.isFavorite = !snapshot.empty;
+    });
   }
-  
-  
 }

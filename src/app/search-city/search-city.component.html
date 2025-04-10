@@ -12,6 +12,7 @@
       autocomplete="off"
     />
 
+    <!-- <button class="test-button" (click)="navigateToFavorites()">show Favorite Cities</button> pentru testarea oraselor favorite -->
     <ul *ngIf="suggestions.length > 0" class="suggestion-list">
       <li *ngFor="let city of suggestions" (mousedown)="selectCity(city)">
         {{ city.name }}<span *ngIf="city.admin1">, {{ city.admin1 }}</span>, {{ city.country }}

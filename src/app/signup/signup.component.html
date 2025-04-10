@@ -1,0 +1,28 @@
+<div class="auth-container">
+    <h2>Create Account</h2>
+  
+    <form (ngSubmit)="onSignup()" class="auth-form">
+      <input
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        placeholder="📧 Email address"
+        required
+      />
+      <input
+        [(ngModel)]="password"
+        name="password"
+        type="password"
+        placeholder="🔒 Password"
+        required
+      />
+      <button type="submit">Sign Up</button>
+    </form>
+  
+    <p *ngIf="error" class="error-msg">⚠️ {{ error }}</p>
+    <p class="switch-link">
+      Already have an account?
+      <a routerLink="/login">Log in here</a>
+    </p>
+  </div>
+  

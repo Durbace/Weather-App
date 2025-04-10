@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
 
