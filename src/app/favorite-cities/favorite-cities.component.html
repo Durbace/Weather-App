@@ -1,0 +1,25 @@
+<div class="favorites-container" *ngIf="favoriteCities.length > 0; else noFavorites">
+    <h2>⭐ Favorite Cities</h2>
+    <ul>
+      <li *ngFor="let city of favoriteCities">
+        <span>
+            <a
+            [routerLink]="['/city', city.name]"
+            [queryParams]="{ lat: city.latitude, lon: city.longitude }"
+          >
+            <strong>{{ city.name }}</strong>
+          </a>
+          
+          {{ city.icon }} {{ city.weatherLabel }} | 🌡️ {{ city.temperature }}°C
+        </span>
+        <button class="remove-btn" (click)="removeCity(city.name)" title="Remove">
+          <i class="fa fa-trash"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noFavorites>
+    <p style="text-align: center;">You haven't added any favorites yet.</p>
+  </ng-template>
+  

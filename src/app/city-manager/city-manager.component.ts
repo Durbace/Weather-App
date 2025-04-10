@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 
 import { CityService, City } from '../services/city.service';
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
 
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+
 
 @Component({
   selector: 'app-city-manager',

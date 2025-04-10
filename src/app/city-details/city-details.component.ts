@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WeatherService } from '../services/weather.service';
 import { CommonModule } from '@angular/common';
+
+import { WeatherService } from '../services/weather.service';
 
 @Component({
   selector: 'app-city-details',
@@ -10,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
 })
-export class CityDetailsComponent implements OnInit {
+export class CityDetailsComponent implements OnInit, OnDestroy {
   cityName = '';
   latitude = 0;
   longitude = 0;
@@ -23,6 +24,10 @@ export class CityDetailsComponent implements OnInit {
   precipitation?: number;
   sunrise?: string;
   sunset?: string;
+
+  isFavorite = false;
+  weatherDisplay?: { icon: string; label: string };
+
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +43,8 @@ export class CityDetailsComponent implements OnInit {
       this.latitude = parseFloat(params.get('lat') || '0');
       this.longitude = parseFloat(params.get('lon') || '0');
 
+      this.checkIfFavorite();
+
       this.weatherService
         .getCurrentWeather(this.latitude, this.longitude)
         .subscribe((data) => {
@@ -45,6 +52,7 @@ export class CityDetailsComponent implements OnInit {
           this.temperature = Math.round(current.temperature * 10) / 10;
           this.windSpeed = Math.round(current.windspeed * 10) / 10;
           this.weatherCode = current.weathercode;
+          this.weatherDisplay = this.weatherService.getWeatherIcon(this.weatherCode || 0);
           if (this.weatherCode !== undefined) {
             this.setBackgroundForWeather(this.weatherCode);
           }
@@ -77,19 +85,9 @@ export class CityDetailsComponent implements OnInit {
     });
   }
 
-  getWeatherIcon(code: number): { icon: string; label: string } {
-    const codes: { [key: number]: { icon: string; label: string } } = {
-      0: { icon: '☀️', label: 'Clear sky' },
-      1: { icon: '🌤️', label: 'Mainly clear' },
-      2: { icon: '⛅', label: 'Partly cloudy' },
-      3: { icon: '☁️', label: 'Overcast' },
-      45: { icon: '🌫️', label: 'Fog' },
-      51: { icon: '🌦️', label: 'Drizzle' },
-      61: { icon: '🌧️', label: 'Rain' },
-      71: { icon: '🌨️', label: 'Snow' },
-      95: { icon: '⛈️', label: 'Thunderstorm' },
-    };
-    return codes[code] || { icon: '❓', label: 'Unknown' };
+  ngOnDestroy(): void {
+    document.body.style.backgroundImage = '';
+    document.body.style.backgroundColor = '#eaeaea';
   }
 
   getClosestTimeIndex(targetTime: string, timeArray: string[]): number {
@@ -111,6 +109,12 @@ export class CityDetailsComponent implements OnInit {
   setBackgroundForWeather(code: number): void {
     let image: string | null = null;
   
+    const knownCodes = [0, 1, 2, 3, 45, 51, 61, 71, 95];
+    if (!knownCodes.includes(code)) {
+      document.body.style.backgroundImage = '';
+      return;
+    }
+  
     if (code === 0) image = 'clear.jpg';
     else if (code === 1 || code === 2) image = 'partly-cloudy.jpg';
     else if (code === 3) image = 'cloudy.jpg';
@@ -129,5 +133,39 @@ export class CityDetailsComponent implements OnInit {
       document.body.style.backgroundImage = '';
     }
   }
+  
+  toggleFavorite(): void {
+    const saved = localStorage.getItem('favoriteCities');
+    let favorites: any[] = saved ? JSON.parse(saved) : [];
+  
+    favorites = favorites.filter(fav => typeof fav === 'object' && fav.name);
+  
+    if (this.isFavorite) {
+      favorites = favorites.filter(fav => fav.name !== this.cityName);
+    } else {
+      const alreadyExists = favorites.some(fav => fav.name === this.cityName);
+      if (!alreadyExists && this.latitude && this.longitude) {
+        favorites.push({
+          name: this.cityName,
+          latitude: this.latitude,
+          longitude: this.longitude,
+        });
+      }
+    }
+  
+    localStorage.setItem('favoriteCities', JSON.stringify(favorites));
+    this.isFavorite = !this.isFavorite;
+  }
+  
+  
+  
+  checkIfFavorite(): void {
+    const saved = localStorage.getItem('favoriteCities');
+    const favorites: any[] = saved ? JSON.parse(saved) : [];
+    this.isFavorite = favorites.some(fav => 
+      typeof fav === 'object' && fav.name === this.cityName
+    );
+  }
+  
   
 }

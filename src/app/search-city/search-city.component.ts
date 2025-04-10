@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
-import { GeocodingService, GeoCity } from '../services/geocoding.service';
 import { RouterModule, Router } from '@angular/router';
+import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+
+import { GeocodingService, GeoCity } from '../services/geocoding.service';
 
 @Component({
   selector: 'app-search-city',
@@ -61,6 +62,10 @@ export class SearchCityComponent {
         input.placeholder = 'Search here...';
       }
     }, 100); 
+  }
+
+  navigateToFavorites() {
+    this.router.navigate(['/favorites']);
   }
 }
 

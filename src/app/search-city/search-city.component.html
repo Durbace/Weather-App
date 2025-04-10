@@ -11,7 +11,7 @@
       class="custom-input"
       autocomplete="off"
     />
-  
+
     <ul *ngIf="suggestions.length > 0" class="suggestion-list">
       <li *ngFor="let city of suggestions" (mousedown)="selectCity(city)">
         {{ city.name }}<span *ngIf="city.admin1">, {{ city.admin1 }}</span>, {{ city.country }}
