@@ -1,0 +1,25 @@
+<div class="city-weather">
+  <h2>Weather in {{ cityName }}</h2>
+
+  <div *ngIf="temperature !== undefined">
+    <p>
+      {{ getWeatherIcon(weatherCode || 0).icon }}
+      {{ getWeatherIcon(weatherCode || 0).label }}
+    </p>
+    <p>🌡️ Temperature: {{ temperature }} °C</p>
+    <p>💨 Wind Speed: {{ windSpeed }} km/h</p>
+
+    <p *ngIf="humidity !== undefined">💧 Humidity: {{ humidity }} %</p>
+    <p *ngIf="precipitation !== undefined">
+      🌂 Precipitation: {{ precipitation }} mm
+    </p>
+    <p *ngIf="uvIndex !== undefined">🔆 UV Index: {{ uvIndex }}</p>
+
+    <p *ngIf="sunrise">🌅 Sunrise: {{ sunrise }}</p>
+    <p *ngIf="sunset">🌇 Sunset: {{ sunset }}</p>
+  </div>
+
+  <div *ngIf="temperature === undefined">
+    <p>Loading weather data...</p>
+  </div>
+</div>

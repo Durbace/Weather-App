@@ -1,0 +1,23 @@
+<div class="search-bar">
+    <input
+      id="city"
+      type="text"
+      [(ngModel)]="query"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+      (input)="search(query)"
+      (keydown.enter)="onEnter()"
+      placeholder="Search here..."
+      class="custom-input"
+      autocomplete="off"
+    />
+  
+    <ul *ngIf="suggestions.length > 0" class="suggestion-list">
+      <li *ngFor="let city of suggestions" (mousedown)="selectCity(city)">
+        {{ city.name }}<span *ngIf="city.admin1">, {{ city.admin1 }}</span>, {{ city.country }}
+      </li>
+    </ul>
+  
+    <i class="pi pi-search search-icon"></i>
+  </div>
+  
