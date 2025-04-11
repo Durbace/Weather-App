@@ -9,5 +9,5 @@ export const routes: Routes = [
   { path: '', component: SearchCityComponent }, 
   { path: 'city/:name', component: CityDetailsComponent } ,
   { path: 'favorites', component: FavoriteCitiesComponent },
-  { path: 'test_page', component: HomepageComponent}
+  { path: 'test_page', component: WeatherHomeComponent}
 ];
