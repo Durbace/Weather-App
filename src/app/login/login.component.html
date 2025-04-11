@@ -29,18 +29,14 @@
       <button pButton type="submit" class="orange-btn">Log In</button>
     </form>
 
-    <p-messages class="failed-message"
-      *ngIf="error"
-      [value]="[{ severity: 'error', summary: 'Login Failed' }]"
-      (onClose)="error = ''"
-      class="mb-3">
-    </p-messages>
-    <p-messages class="failed-error"
-      *ngIf="error"
-      [value]="[{ detail: error }]"
-      (onClose)="error = ''"
-      class="mb-3">
-    </p-messages>
+    <div *ngIf="error" class="custom-error-message mb-3">
+      <p-message
+        severity="error"
+        [escape]="false"
+        text="<strong>Login Failed</strong><br>Wrong email or password. Please try again.<br>"
+        (onClose)="error = ''">
+      </p-message>
+    </div>
 
     <div class="switch-link">
       Don’t have an account? <a routerLink="/signup">Create one</a>

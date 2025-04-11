@@ -66,45 +66,26 @@ p-card.login-card {
   background-color: #cc5200 !important;
 }
 
-:host ::ng-deep .p-messages {
-  border: none;
-  background-color: #ffe5dc;
-  color: #cc3300;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-top: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: 'Poppins', sans-serif;
-}
-
-:host ::ng-deep .p-messages-error {
-  background-color: #ffe5dc;
-  border-left: 4px solid #ff6600;
+:host ::ng-deep .custom-error-message .p-message {
+  background-color: #f5d6ae;
   color: #b23a00;
-  border-radius: 10px;
   padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  text-align: center;
   font-family: 'Poppins', sans-serif;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
 }
 
-:host ::ng-deep .p-message-summary {
-  font-weight: 700;
-  font-size: 1rem;
+:host ::ng-deep .custom-error-message .p-message .p-message-text strong {
   display: block;
-  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: #cc3300;
 }
 
-:host ::ng-deep .p-message-detail {
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-:host ::ng-deep .p-messages .p-messages-close {
-  color: #b23a00;
-  opacity: 0.7;
-}
-
-:host ::ng-deep .p-messages .p-message-icon {
+:host ::ng-deep .custom-error-message .p-message .p-message-icon {
   visibility: hidden;
 }
 
