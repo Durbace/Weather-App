@@ -27,7 +27,7 @@ export class WeatherHomeComponent {
         data: [12, 24, 18, 27, 20, 10, 5, 15],
         fill: false,
         borderColor: '#42A5F5',
-        tension: 0.4
+        tension: 0.35
       }
     ]
   };
