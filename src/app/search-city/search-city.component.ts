@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
-
+import { CardModule } from 'primeng/card';
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
 
 @Component({
   selector: 'app-search-city',
   standalone: true,
-  imports: [CommonModule, FormsModule, AutoCompleteModule, RouterModule],
+  imports: [CommonModule, FormsModule, AutoCompleteModule, RouterModule, CardModule],
   templateUrl: './search-city.component.html',
   styleUrls: ['./search-city.component.css']
 })

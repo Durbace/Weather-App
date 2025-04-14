@@ -127,3 +127,25 @@
     gap: 1rem;
     margin-bottom: 2rem;
   }
+
+  .weather-card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .weather-card::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(144, 161, 255);
+    z-index: 0;
+    border-radius: 50%;
+    left: 100px;
+    top: 50px;
+    transition: all 1s;
+  }
+  
+  .weather-card:hover::before {
+    transform: translate(-50px, 50px);
+  }
