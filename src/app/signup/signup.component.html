@@ -1,28 +1,59 @@
-<div class="auth-container">
-    <h2>Create Account</h2>
-  
-    <form (ngSubmit)="onSignup()" class="auth-form">
-      <input
-        [(ngModel)]="email"
-        name="email"
-        type="email"
-        placeholder="📧 Email address"
-        required
-      />
-      <input
-        [(ngModel)]="password"
-        name="password"
-        type="password"
-        placeholder="🔒 Password"
-        required
-      />
-      <button type="submit">Sign Up</button>
+<div class="login-card">
+  <p-card header="Create Account" class="login-card">
+    <form (ngSubmit)="onSignup()" class="p-fluid">
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          name="email"
+          [(ngModel)]="email"
+          placeholder="you@example.com"
+          required />
+      </div>
+
+      <div class="p-field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pPassword
+          name="password"
+          [(ngModel)]="password"
+          placeholder="••••••••"
+          required
+          toggleMask="true" />
+      </div>
+
+      <div class="p-field">
+        <label for="passwordConfirm">Confirm Password</label>
+        <input
+          id="passwordConfirm"
+          type="password"
+          pPassword
+          name="passwordConfirm"
+          [(ngModel)]="passwordConfirm"
+          placeholder="••••••••"
+          required
+          toggleMask="true" />
+      </div>
+
+      <button pButton type="submit" class="orange-btn">Sign Up</button>
     </form>
-  
-    <p *ngIf="error" class="error-msg">⚠️ {{ error }}</p>
-    <p class="switch-link">
+
+    <div *ngIf="error" class="custom-error-message mb-3">
+      <p-message
+        severity="error"
+        [escape]="false"
+        [text]="errorMessage"
+        (onClose)="error = ''">
+      </p-message>
+    </div>
+
+    <div class="switch-link">
       Already have an account?
-      <a routerLink="/login">Log in here</a>
-    </p>
-  </div>
-  
+      <a routerLink="/login">Log in</a>
+    </div>
+  </p-card>
+</div>
