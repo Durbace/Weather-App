@@ -12,9 +12,9 @@ import { WeatherService } from '../services/weather.service';
   imports: [CommonModule],
 })
 export class CityDetailsComponent implements OnInit, OnDestroy {
-  cityName = '';
-  latitude = 0;
-  longitude = 0;
+  cityName = ''; //input
+  latitude = 0; //input
+  longitude = 0; //input
 
   temperature?: number;
   windSpeed?: number;

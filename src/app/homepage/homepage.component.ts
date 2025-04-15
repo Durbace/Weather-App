@@ -4,6 +4,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { SearchCityComponent } from "../search-city/search-city.component";
 
 @Component({
   selector: 'app-weather-home',
@@ -13,8 +14,9 @@ import { ChartModule } from 'primeng/chart';
     InputTextModule,
     ButtonModule,
     CardModule,
-    ChartModule
-  ],
+    ChartModule,
+    SearchCityComponent
+],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
