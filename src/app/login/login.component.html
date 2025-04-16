@@ -1,0 +1,45 @@
+<div class="login-card">
+  <p-card header="Welcome Back" class="login-card">
+    <form (ngSubmit)="onLogin()" class="p-fluid">
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          name="email"
+          [(ngModel)]="email"
+          placeholder="you@example.com"
+          required />
+      </div>
+
+      <div class="p-field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          pPassword
+          name="password"
+          [(ngModel)]="password"
+          placeholder="••••••••"
+          required
+          toggleMask="true" />
+      </div>
+
+      <button pButton type="submit" class="orange-btn">Log In</button>
+    </form>
+
+    <div *ngIf="error" class="custom-error-message mb-3">
+      <p-message
+        severity="error"
+        [escape]="false"
+        text="<strong>Login Failed</strong>Wrong email or password. Please try again."
+        (onClose)="error = ''">
+      </p-message>
+    </div>
+
+    <div class="switch-link">
+      Don’t have an account? <a routerLink="/signup">Sign up</a>
+    </div>
+  </p-card>
+</div>

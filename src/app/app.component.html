@@ -1,3 +1,8 @@
+
+<button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+
+<router-outlet></router-outlet>
+
 <div class='app-container flex '>
     <div class="w-2 h-screen" >
     <app-sidebar></app-sidebar>
@@ -6,3 +11,4 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+

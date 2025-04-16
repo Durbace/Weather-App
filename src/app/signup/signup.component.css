@@ -1,0 +1,102 @@
+div.login-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5c38a, #f3f3f3);
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p-card.login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  background-color: rgba(250, 145, 54, 0.644);
+}
+
+:host ::ng-deep .login-card .p-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: #3b3b3b;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.p-field {
+  margin-bottom: 1.5rem;
+}
+
+.p-field label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: #444;
+}
+
+.p-inputtext,
+.p-password-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+
+.orange-btn {
+  width: 100%;
+  background-color: #ff6600 !important;
+  color: #fad9bd !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.orange-btn:hover {
+  background-color: #cc5200 !important;
+}
+
+:host ::ng-deep .custom-error-message .p-message {
+  background-color: #f5d6ae;
+  color: #b23a00;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+:host ::ng-deep .custom-error-message .p-message .p-message-text strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+  color: #cc3300;
+}
+
+:host ::ng-deep .custom-error-message .p-message .p-message-icon {
+  visibility: hidden;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.switch-link a {
+  color: #ff6600;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+}
