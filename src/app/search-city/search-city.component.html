@@ -1,30 +1,26 @@
 <div class="search-bar">
-    <input
-      id="city"
-      type="text"
-      [(ngModel)]="query"
-      (focus)="onInputFocus()"
-      (blur)="onInputBlur()"
-      (input)="search(query)"
-      (keydown.enter)="onEnter()"
-      placeholder="Search here..."
-      class="custom-input"
-      autocomplete="off"
-    />
+  <input
+    id="city"
+    type="text"
+    [(ngModel)]="query"
+    (focus)="onInputFocus()"
+    (blur)="onInputBlur()"
+    (input)="search(query)"
+    (keydown.enter)="onEnter()"
+    placeholder="Search here..."
+    class="custom-input"
+    autocomplete="off"
+  />
 
-    <!-- <button class="test-button" (click)="navigateToFavorites()">show Favorite Cities</button> pentru testarea oraselor favorite -->
-    <ul *ngIf="suggestions.length > 0" class="suggestion-list">
-      <li *ngFor="let city of suggestions" (mousedown)="selectCity(city)">
-        {{ city.name }}<span *ngIf="city.admin1">, {{ city.admin1 }}</span>, {{ city.country }}
-      </li>
-    </ul>
-  
-    <i class="pi pi-search search-icon"></i>
-  </div>
+  <ul *ngIf="suggestions.length > 0" class="suggestion-list">
+    <li *ngFor="let city of suggestions" (mousedown)="selectCity(city)">
+      {{ city.name }}<span *ngIf="city.admin1">, {{ city.admin1 }}</span>, {{ city.country }}
+    </li>
+  </ul>
 
-  
-  
-  <main class = "main-content">
-<router-outlet></router-outlet>
-<!-- <app-city-details [options]="details"></app-city-details> -->
-  </main>
+  <i class="pi pi-search search-icon"></i>
+</div>
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

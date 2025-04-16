@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({

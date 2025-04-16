@@ -6,14 +6,38 @@
   <h2>Weather in {{ cityName }}</h2>
 
   <div *ngIf="temperature !== undefined">
-    <p *ngIf="weatherDisplay">{{ weatherDisplay.icon }} {{ weatherDisplay.label }}</p>
-    <p>🌡️ Temperature: {{ temperature }} °C</p>
-    <p>💨 Wind Speed: {{ windSpeed }} km/h</p>
-    <p *ngIf="humidity !== undefined">💧 Humidity: {{ humidity }} %</p>
-    <p *ngIf="precipitation !== undefined">🌂 Precipitation: {{ precipitation }} mm</p>
-    <p *ngIf="uvIndex !== undefined">🔆 UV Index: {{ uvIndex }}</p>
-    <p *ngIf="sunrise">🌅 Sunrise: {{ sunrise }}</p>
-    <p *ngIf="sunset">🌇 Sunset: {{ sunset }}</p>
+    <p *ngIf="weatherDisplay">
+      <i [class]="'pi ' + weatherDisplay.icon + ' mr-1'"></i>
+      {{ weatherDisplay.label }}
+    </p>
+    <p>
+      <i class="fa fa-thermometer-half mr-1 ml-2"></i>
+      Temperature: {{ temperature }} °C
+    </p>
+    <p>
+      <i class="fa fa-wind mr-1 ml-2"></i>
+      Wind Speed: {{ windSpeed }} km/h
+    </p>
+    <p *ngIf="humidity !== undefined">
+      <i class="fa fa-tint mr-1 ml-2"></i>
+      Humidity: {{ humidity }} %
+    </p>    
+    <p *ngIf="precipitation !== undefined">
+      <i class="pi pi-cloud-download mr-1 ml-2"></i>
+      Precipitation: {{ precipitation }} mm
+    </p>
+    <p *ngIf="uvIndex !== undefined">
+      <i class="pi pi-sun mr-1 ml-2"></i>
+      UV Index: {{ uvIndex }}
+    </p>
+    <p *ngIf="sunrise">
+      <i class="pi pi-arrow-up mr-1 ml-2"></i>
+      Sunrise: {{ sunrise }}
+    </p>
+    <p *ngIf="sunset">
+      <i class="pi pi-arrow-down mr-1 ml-2"></i>
+      Sunset: {{ sunset }}
+    </p>
   </div>
 
   <div *ngIf="temperature === undefined">

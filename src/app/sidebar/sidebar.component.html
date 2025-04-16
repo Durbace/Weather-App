@@ -1,19 +1,20 @@
-
-
-<div class="sidebar   text-xl">
-    <aside class="sidebar flex flex-column h-screen">
+<div class="sidebar text-xl">
+  <aside class="sidebar flex flex-column h-screen">
     
-    <div class="menu my-4 p-4" [routerLink]="['/home']" routerLinkActive>
-      <i class="pi pi-home"></i>
+    <div class="menu my-4 p-4 cursor-pointer hover:bg-gray-100 transition" [routerLink]="['/home']" routerLinkActive>
+      <i class="pi pi-home mr-2"></i>
       <span>Home</span>
     </div>
-    <div class="test my-4 p-4" [routerLink]="['/test']">
-        <div>test</div>
+
+    <div class="favorites my-4 p-4 cursor-pointer hover:bg-gray-100 transition" [routerLink]="['/favorites']">
+      <i class="pi pi-star mr-2" style="color: #facc15;"></i>
+      <span>Favorite Cities</span>
     </div>
-    <div class="user-info p-4  mt-auto">
-      <i class="pi pi-user"></i>
+
+    <div class="user-info p-4 mt-auto">
+      <i class="pi pi-user mr-2"></i>
       <span>Hello, User</span>
     </div>
-</aside>
 
+  </aside>
 </div>

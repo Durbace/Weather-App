@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Auth, authState } from '@angular/fire/auth';
+import { Firestore, collection, addDoc, deleteDoc, doc, getDocs, query, where } from '@angular/fire/firestore';
+import { firstValueFrom } from 'rxjs';
 
 import { WeatherService } from '../services/weather.service';
-import { Auth } from '@angular/fire/auth';
-import { Firestore, collection, addDoc, deleteDoc, doc, getDocs, query, where } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-city-details',
@@ -14,9 +15,9 @@ import { Firestore, collection, addDoc, deleteDoc, doc, getDocs, query, where } 
   imports: [CommonModule],
 })
 export class CityDetailsComponent implements OnInit, OnDestroy {
-  cityName = ''; //input
-  latitude = 0; //input
-  longitude = 0; //input
+  cityName = ''; 
+  latitude = 0; 
+  longitude = 0;
 
   temperature?: number;
   windSpeed?: number;
@@ -28,6 +29,7 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
   sunset?: string;
 
   isFavorite = false;
+  hover = false;
   weatherDisplay?: { icon: string; label: string };
 
 
@@ -38,17 +40,20 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
     private auth: Auth
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.cityName = params.get('name') || '';
     });
-
-    this.route.queryParamMap.subscribe((params) => {
+  
+    this.route.queryParamMap.subscribe(async (params) => {
       this.latitude = parseFloat(params.get('lat') || '0');
       this.longitude = parseFloat(params.get('lon') || '0');
-
-      this.checkIfFavorite();
-
+  
+      const user = await firstValueFrom(authState(this.auth));
+      if (!user) return;
+  
+      this.checkIfFavorite(user.uid);
+  
       this.weatherService
         .getCurrentWeather(this.latitude, this.longitude)
         .subscribe((data) => {
@@ -60,35 +65,33 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
           if (this.weatherCode !== undefined) {
             this.setBackgroundForWeather(this.weatherCode);
           }
-
-          this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString(
-            [],
-            { hour: '2-digit', minute: '2-digit' }
-          );
+  
+          this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
           this.sunset = new Date(data.daily.sunset[0]).toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
           });
-
+  
           const currentHour = current.time;
           const hourlyTimes: string[] = data.hourly.time;
-
+  
           let index = hourlyTimes.findIndex((t) => t === currentHour);
-
           if (index === -1) {
             index = this.getClosestTimeIndex(currentHour, hourlyTimes);
           }
-
+  
           if (index !== -1) {
             this.humidity = Math.round(data.hourly.relative_humidity_2m[index]);
             this.uvIndex = Math.round(data.hourly.uv_index[index] * 10) / 10;
-            this.precipitation =
-              Math.round(data.hourly.precipitation[index] * 10) / 10;
+            this.precipitation = Math.round(data.hourly.precipitation[index] * 10) / 10;
           }
         });
     });
   }
-
+  
   ngOnDestroy(): void {
     document.body.style.backgroundImage = '';
     document.body.style.backgroundColor = '#eaeaea';
@@ -138,21 +141,20 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
     }
   }
   
-  toggleFavorite(): void {
-    const uid = this.auth.currentUser?.uid;
-    if (!uid) return;
+  async toggleFavorite(): Promise<void> {
+    const user = await firstValueFrom(authState(this.auth));
+    if (!user) return;
   
-    const favRef = collection(this.firestore, `users/${uid}/favorites`);
+    const favRef = collection(this.firestore, `users/${user.uid}/favorites`);
   
     if (this.isFavorite) {
-      getDocs(query(favRef, where('name', '==', this.cityName))).then(snapshot => {
-        snapshot.forEach(docSnap => {
-          const docRef = doc(this.firestore, `users/${uid}/favorites/${docSnap.id}`);
-          deleteDoc(docRef);
-        });
+      const snapshot = await getDocs(query(favRef, where('name', '==', this.cityName)));
+      snapshot.forEach(docSnap => {
+        const docRef = doc(this.firestore, `users/${user.uid}/favorites/${docSnap.id}`);
+        deleteDoc(docRef);
       });
     } else {
-      addDoc(favRef, {
+      await addDoc(favRef, {
         name: this.cityName,
         latitude: this.latitude,
         longitude: this.longitude,
@@ -162,14 +164,11 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
     this.isFavorite = !this.isFavorite;
   }
   
-  
-  checkIfFavorite(): void {
-    const uid = this.auth.currentUser?.uid;
-    if (!uid) return;
-  
+  checkIfFavorite(uid: string): void {
     const favRef = collection(this.firestore, `users/${uid}/favorites`);
     getDocs(query(favRef, where('name', '==', this.cityName))).then(snapshot => {
       this.isFavorite = !snapshot.empty;
     });
   }
+  
 }

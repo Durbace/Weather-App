@@ -45,6 +45,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    margin-left: 25px;
   }
   
   .remove-btn i {

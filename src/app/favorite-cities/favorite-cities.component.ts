@@ -3,10 +3,10 @@ import { forkJoin, interval, Observable, Subject, firstValueFrom } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-
-import { WeatherService } from '../services/weather.service';
 import { collection, getDocs, Firestore, query, where, deleteDoc, doc } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
+
+import { WeatherService } from '../services/weather.service';
 
 interface FavoriteCityWeather {
   name: string;

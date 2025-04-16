@@ -1,17 +1,16 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 
-import { AutoCompleteModule, AutoCompleteSelectEvent } from 'primeng/autocomplete';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CardModule } from 'primeng/card';
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
-import { CityDetailsComponent } from "../city-details/city-details.component";
 
 @Component({
   selector: 'app-search-city',
   standalone: true,
-  imports: [CommonModule, FormsModule, AutoCompleteModule, RouterModule, CardModule, CityDetailsComponent],
+  imports: [CommonModule, FormsModule, AutoCompleteModule, RouterModule, CardModule],
   templateUrl: './search-city.component.html',
   styleUrls: ['./search-city.component.css']
 })
@@ -34,7 +33,7 @@ export class SearchCityComponent {
   selectCity(city: GeoCity): void {
     this.query = city.name;
     this.suggestions = [];
-    this.router.navigate(['/home', city.name], {
+    this.router.navigate(['/city', city.name], {
       queryParams: {
         country: city.country,
         admin1: city.admin1,
