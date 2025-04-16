@@ -5,10 +5,6 @@ import { SignupComponent } from './signup/signup.component';
 import { FavoriteCitiesComponent } from './favorite-cities/favorite-cities.component';
 import { CityDetailsComponent } from './city-details/city-details.component';
 import { authGuard } from './services/auth.guard';
-
-export const routes: Routes = [
-  
-
 import { HomepageComponent } from './homepage/homepage.component';
 
 export const routes: Routes = [
