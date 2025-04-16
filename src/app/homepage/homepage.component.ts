@@ -4,6 +4,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
+import { SearchCityComponent } from "../search-city/search-city.component";
 
 @Component({
   selector: 'app-weather-home',
@@ -13,8 +14,9 @@ import { ChartModule } from 'primeng/chart';
     InputTextModule,
     ButtonModule,
     CardModule,
-    ChartModule
-  ],
+    ChartModule,
+    SearchCityComponent
+],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
@@ -27,7 +29,7 @@ export class HomepageComponent {
         data: [12, 24, 18, 27, 20, 10, 5, 15],
         fill: false,
         borderColor: '#42A5F5',
-        tension: 0.4
+        tension: 0.35
       }
     ]
   };

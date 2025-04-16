@@ -6,8 +6,11 @@ import { FavoriteCitiesComponent } from './favorite-cities/favorite-cities.compo
 import { HomepageComponent } from './homepage/homepage.component';
 
 export const routes: Routes = [
+
+  { path: 'home', component: WeatherHomeComponent },
+  //{ path: 'test', component: SearchCityComponent },
   //{ path: '', component: SearchCityComponent }, 
-  { path: 'city/:name', component: CityDetailsComponent } ,
+  { path: 'home/:name', component: CityDetailsComponent },
   { path: 'favorites', component: FavoriteCitiesComponent },
-  { path: '', component: HomepageComponent}
+  //{ path: 'test_page', component: WeatherHomeComponent}
 ];
