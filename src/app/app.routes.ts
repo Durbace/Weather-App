@@ -7,8 +7,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 
 export const routes: Routes = [
 
-  { path: 'home', component: WeatherHomeComponent },
-  //{ path: 'test', component: SearchCityComponent },
+  { path: 'home', component: HomepageComponent },
+  { path: 'test', component: SearchCityComponent },
   //{ path: '', component: SearchCityComponent }, 
   { path: 'home/:name', component: CityDetailsComponent },
   { path: 'favorites', component: FavoriteCitiesComponent },
