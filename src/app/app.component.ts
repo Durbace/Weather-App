@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
+  imports: [RouterOutlet, SidebarComponent],
   standalone: true,
   imports: [RouterOutlet,CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
   title = 'Weather-App';
