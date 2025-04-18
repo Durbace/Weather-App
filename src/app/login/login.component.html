@@ -1,5 +1,9 @@
 <div class="login-card">
-  <p-card header="Welcome Back" class="login-card">
+  <p-card class="login-box">
+    <ng-template pTemplate="header">
+      <div class="login-title">Welcome Back</div>
+    </ng-template>
+
     <form (ngSubmit)="onLogin()" class="p-fluid">
       <div class="p-field">
         <label for="email">Email</label>
@@ -10,7 +14,8 @@
           name="email"
           [(ngModel)]="email"
           placeholder="you@example.com"
-          required />
+          required 
+          autocomplete="off"/>
       </div>
 
       <div class="p-field">

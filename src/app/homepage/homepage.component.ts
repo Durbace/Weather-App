@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { SearchCityComponent } from "../search-city/search-city.component";
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-weather-home',
@@ -15,12 +16,22 @@ import { SearchCityComponent } from "../search-city/search-city.component";
     ButtonModule,
     CardModule,
     ChartModule,
-    SearchCityComponent
+    SearchCityComponent,
+    SidebarComponent
 ],
   templateUrl: './homepage.component.html',
-  styleUrls: ['./homepage.component.css']
+  styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent {
+  cardTitles = [
+    'Temperature card',
+    'Precipitation (rain + showers + snow)',
+    'Precipitation Probability',
+    'Visibility',
+    'UV index',
+    'Apparent Temperature'
+  ];
+  
   chartData = {
     labels: ['13 Mar', '14 Mar', '15 Mar', '16 Mar', '17 Mar', '18 Mar', '19 Mar', '20 Mar'],
     datasets: [
@@ -33,4 +44,6 @@ export class HomepageComponent {
       }
     ]
   };
+
+  
 }

@@ -1,5 +1,9 @@
 <div class="login-card">
-  <p-card header="Create Account" class="login-card">
+  <p-card class="login-box">
+    <ng-template pTemplate="header">
+      <div class="login-title">Create Account</div>
+    </ng-template>
+
     <form (ngSubmit)="onSignup()" class="p-fluid">
       <div class="p-field">
         <label for="email">Email</label>
@@ -10,7 +14,8 @@
           name="email"
           [(ngModel)]="email"
           placeholder="you@example.com"
-          required />
+          required 
+          autocomplete="off"/>
       </div>
 
       <div class="p-field">
@@ -52,8 +57,7 @@
     </div>
 
     <div class="switch-link">
-      Already have an account?
-      <a routerLink="/login">Log in</a>
+      Already have an account? <a routerLink="/login">Log in</a>
     </div>
   </p-card>
 </div>

@@ -20,7 +20,7 @@ interface FavoriteCityWeather {
 @Component({
   selector: 'app-favorite-cities',
   templateUrl: './favorite-cities.component.html',
-  styleUrls: ['./favorite-cities.component.css'],
+  styleUrls: ['./favorite-cities.component.scss'],
   standalone: true,
   imports: [CommonModule, RouterModule],
 })

@@ -1,0 +1,121 @@
+$orange: #ff6600;
+$orange-dark: #cc5200;
+$orange-light: rgba(250, 145, 54, 0.644);
+$beige: #fad9bd;
+$gray-dark: #3b3b3b;
+$gray-medium: #444;
+$gray-light: #555;
+$error-bg: #f5d6ae;
+$error-text: #b23a00;
+$error-strong: #cc3300;
+$shadow-light: 0 8px 20px rgba(0, 0, 0, 0.08);
+$shadow-error: 0 3px 6px rgba(0, 0, 0, 0.08);
+
+.login-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5c38a, #f3f3f3);
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:host ::ng-deep .login-box {
+  width: 400px;
+  height: 400px;
+  background-color: $orange-light !important;
+  border-radius: 20px !important;
+  box-shadow: $shadow-light;
+  padding: 2rem !important;
+
+  .p-card-body {
+    padding: 0 !important;
+  }
+
+  .p-card-content {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}
+
+.login-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: $gray-dark;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
+.p-field {
+  margin-bottom: 1.25rem;
+
+  label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: $gray-medium;
+  }
+}
+
+.p-inputtext,
+.p-password-input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+
+.orange-btn {
+  width: 100%;
+  background-color: $orange !important;
+  color: $beige !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+
+  &:hover {
+    background-color: $orange-dark !important;
+  }
+}
+
+.custom-error-message .p-message {
+  background-color: $error-bg;
+  color: $error-text;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 1rem;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: $shadow-error;
+
+  .p-message-text strong {
+    color: $error-strong;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .p-message-icon {
+    visibility: hidden;
+  }
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.95rem;
+  color: $gray-light;
+
+  a {
+    color: $orange;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

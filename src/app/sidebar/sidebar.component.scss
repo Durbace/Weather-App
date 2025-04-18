@@ -1,0 +1,56 @@
+$sidebar-bg: #ede9e9;
+$primary-orange: #ff6600;
+$yellow-star: #facc15;
+$gray-dark: #444;
+$gray-medium: #535353;
+$logout-hover: #e25f07;
+
+.sidebar {
+  background-color: $sidebar-bg;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  color: $gray-dark;
+
+  .menu {
+    i.pi-home,
+    span {
+      color: $primary-orange;
+      font-weight: 500;
+    }
+  }
+
+  .favorites {
+    i.pi-star-fill {
+      color: $yellow-star;
+    }
+
+    span {
+      color: $gray-medium;
+    }
+  }
+
+  .user-info {
+    span,
+    i.pi-user {
+      color: $gray-medium;
+    }
+  }
+}
+
+.logout-btn {
+  background-color: $primary-orange;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $logout-hover;
+  }
+}

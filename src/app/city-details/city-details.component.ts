@@ -10,7 +10,7 @@ import { WeatherService } from '../services/weather.service';
 @Component({
   selector: 'app-city-details',
   templateUrl: './city-details.component.html',
-  styleUrls: ['./city-details.component.css'],
+  styleUrls: ['./city-details.component.scss'],
   standalone: true,
   imports: [CommonModule],
 })

@@ -6,8 +6,10 @@ import { FavoriteCitiesComponent } from './favorite-cities/favorite-cities.compo
 import { CityDetailsComponent } from './city-details/city-details.component';
 import { authGuard } from './services/auth.guard';
 import { HomepageComponent } from './homepage/homepage.component';
+import { RedirectorComponent } from './redirector.component';
 
 export const routes: Routes = [
+  { path: '', component: RedirectorComponent },
 
   { path: 'home', component: HomepageComponent, canActivate: [authGuard] },
   { path: 'test', component: SearchCityComponent },

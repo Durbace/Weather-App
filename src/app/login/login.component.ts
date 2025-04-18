@@ -20,7 +20,7 @@ import { CardModule } from 'primeng/card';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, InputTextModule, PasswordModule, ButtonModule, MessagesModule, MessageModule, CardModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email = '';
@@ -41,7 +41,7 @@ export class LoginComponent {
 
   onLogin() {
     this.auth.login(this.email, this.password)
-      .then(() => this.router.navigate(['/']))
+      .then(() => this.router.navigate(['/home']))
       .catch(err => {
         if (err.code) {
           this.error = 'Wrong email or password, Please try again.';

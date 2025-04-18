@@ -3,14 +3,13 @@ import { Auth } from '@angular/fire/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
-import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SidebarComponent, CommonModule],
+  imports: [RouterOutlet, CommonModule],
   standalone: true,
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrl: './app.component.scss',
   template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
@@ -20,12 +19,6 @@ export class AppComponent {
   constructor(private router: Router, private auth: Auth) {
     onAuthStateChanged(this.auth, (user) => {
       this.isLoggedIn = !!user;
-    });
-  }
-
-  logout() {
-    this.auth.signOut().then(() => {
-      this.router.navigate(['/login']);
     });
   }
 }

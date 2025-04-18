@@ -1,0 +1,86 @@
+$gray-light: #ede9e9;
+$gray-medium: #d3d3d3;
+$text-gray: #535353;
+$white: #fff;
+$shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+$shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+.highlight-section-box {
+  background-color: $gray-light;
+  padding: 2rem;
+  margin: 2rem 1rem;
+  border-radius: 12px;
+  box-shadow: $shadow-soft;
+  color: $text-gray;
+
+  .highlight-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: $text-gray;
+  }
+
+  .highlight-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .highlight-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      flex: 1;
+      min-width: 300px;
+
+      .highlight-card-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        p-card {
+          background-color: $gray-medium;
+          border-radius: 10px;
+          box-shadow: none;
+          padding: 1rem;
+          min-height: 100px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          word-break: break-word;
+          font-weight: 500;
+          color: $text-gray;
+        }
+
+        ::ng-deep .p-card-header {
+          white-space: normal;
+          text-align: center;
+          word-break: break-word;
+          font-weight: 600;
+          font-size: 1rem;
+          color: $text-gray;
+        }
+      }
+    }
+
+    .highlight-chart-wrapper {
+      background-color: $white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: $shadow-lighter;
+      width: 550px;
+      height: 350px;
+    }
+
+    .highlight-chart {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      height: auto;
+      align-self: flex-start;
+      background-color: transparent;
+    }
+  }
+}
