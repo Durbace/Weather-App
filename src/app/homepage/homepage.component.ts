@@ -18,6 +18,8 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
     ChartModule,
     SearchCityComponent,
     SidebarComponent
+    SearchCityComponent,
+    SidebarComponent
 ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
