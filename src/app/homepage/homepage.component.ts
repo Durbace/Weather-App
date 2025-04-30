@@ -17,9 +17,8 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
     CardModule,
     ChartModule,
     SearchCityComponent,
-    SidebarComponent
+    SidebarComponent,
     SearchCityComponent,
-    SidebarComponent
 ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']

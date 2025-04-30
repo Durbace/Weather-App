@@ -12,7 +12,6 @@ export const routes: Routes = [
   { path: '', component: RedirectorComponent },
 
   { path: 'home', component: HomepageComponent, canActivate: [authGuard] },
-  { path: 'test', component: SearchCityComponent },
   //{ path: '', component: SearchCityComponent }, 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
