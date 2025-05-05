@@ -5,8 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { SearchCityComponent } from "../search-city/search-city.component";
-import { SidebarComponent } from "../sidebar/sidebar.component";
-
+import { SidebarModule } from 'primeng/sidebar';
+import { WeatherService } from '../services/weather.service';
 @Component({
   selector: 'app-weather-home',
   standalone: true,
@@ -17,13 +17,15 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
     CardModule,
     ChartModule,
     SearchCityComponent,
-    SidebarComponent,
+    SidebarModule,
     SearchCityComponent,
 ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent {
+  Location?: string;
+  sidebarVisible: boolean = false;
   cardTitles = [
     'Temperature card',
     'Precipitation (rain + showers + snow)',

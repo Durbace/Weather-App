@@ -27,6 +27,9 @@
               }
             ],
             "styles": [
+              "node_modules/primeflex/themes/primeone-light.scss",
+              "node_modules/primeflex/primeflex.scss",
+              "node_modules/primeflex/primeflex.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/primeflex/primeflex.css",
