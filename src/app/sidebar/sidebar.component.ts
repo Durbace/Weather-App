@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
-
+import { SidebarService } from '../services/sidebar.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -10,7 +10,14 @@ import { Auth } from '@angular/fire/auth';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  constructor(private auth: Auth, private router: Router) {}
+  visible = false;
+  constructor(
+    private auth: Auth,
+    private router: Router,
+    private sidebarService: SidebarService
+    ) {
+      this.sidebarService.visible$.subscribe(v => (this.visible = v))
+    }
 
   logout() {
     this.auth.signOut().then(() => {

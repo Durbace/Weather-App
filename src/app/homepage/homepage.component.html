@@ -6,7 +6,7 @@
     pButton
     icon="pi pi-bars"
     class="p-button-text"
-    (click)="sidebarVisible = true"
+    (click)="openSidebar()"
   ></button>
 </div>
 
@@ -20,7 +20,7 @@
         <div class="relative w-full" style="height: 150px;">
           <div class="absolute left-2 top-2 z-2">
             <span class="text-surface-500 font-medium text-sm">Current Location</span>
-            <h2 class="text-surface-500 font-bold text-2xl m-0">{{ Location }}</h2>
+            <h2 class="text-surface-500 font-bold text-2xl m-0">{{cityName}}</h2>
           </div>
         </div>
       </ng-template>
@@ -37,31 +37,30 @@
               <div class="grid nested-grid">
                 <div class="col-3">
                   <div
-                    class="p-8 border-round shadow-1 text-center bg-cover flex align-items-center justify-content-center overflow-hidden"
+                    class="p-8 border-round shadow-1 text-center text-3xl text-blue-100 bg-cover flex align-items-center justify-content-center overflow-hidden"
                     style="background-image: url('/bucharestSample.jpg');">
-                    Temperature card
+                    {{temperature}}°C
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="grid gap-4">
                     <div class="col-12">
-                      <div class=" p-8 border-round shadow-1 text-center bg-blue-300">
-                        Apparent Temperature
+                      <div class="p-8 text-cyan-800 border-round shadow-1 justify-content-center align-items-center bg-blue-300">
+                        {{windSpeed}} kmh/h
                       </div>
                     </div>
-
                   </div>
                 </div>
                 <div class="col-3">
                   <div class="grid gap-4">
                     <div class="col-12">
                       <div class="p-4 border-round shadow-1 text-center bg-blue-300">
-                        Precipitation Probability
+                        {{ precipitation }} mm
                       </div>
                     </div>
                     <div class="col-12">
                       <div class=" p-4 border-round shadow-1 text-center">
-                        Precipitation (rain + showers + snow)
+                        {{humidity}}%
                       </div>
                     </div>
                   </div>
@@ -70,12 +69,12 @@
                   <div class="grid gap-4">
                     <div class="col-12">
                       <div class=" p-4 border-round shadow-1 text-center">
-                        Visibility
+                        {{ sunrise }}
                       </div>
                     </div>
                     <div class="col-12">
                       <div class=" p-4 border-round shadow-1 text-center">
-                        UV index
+                        {{sunset}}
                       </div>
                     </div>
                   </div>
@@ -97,3 +96,5 @@
     </p-card>
   </div>
 </main>
+
+<app-sidebar></app-sidebar>
