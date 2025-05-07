@@ -27,6 +27,7 @@ export class SidebarComponent {
     this.auth.signOut().then(() => {
       this.router.navigate(['/login']);
     });
+    this.closeSidebar();
   }
 
   closeSidebar() {
