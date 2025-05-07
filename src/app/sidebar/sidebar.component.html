@@ -1,16 +1,32 @@
-<div class="sidebar-overlay" *ngIf="visible$ | async"
-  (click)="closeSidebar()"></div>
-<div class="sidebar-container" [class.visible]="(visible$ | async)">
+<div
+  class="sidebar-overlay"
+  *ngIf="visible$ | async"
+  (click)="closeSidebar()"
+></div>
+<div class="sidebar-container" [class.visible]="visible$ | async">
   <aside class="sidebar">
-    <div>
-      <div class="menu" [routerLink]="['/home']" routerLinkActive
-        (click)="closeSidebar()">
+    <div class="sidebar-header">
+      <button class="close-btn" (click)="closeSidebar()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    <div class="sidebar-main">
+      <div
+        class="menu"
+        [routerLink]="['/home']"
+        routerLinkActive="active-link"
+        (click)="closeSidebar()"
+      >
         <i class="pi pi-home mr-2"></i>
         <span>Home</span>
       </div>
 
-      <div class="favorites" [routerLink]="['/favorites']"
-        (click)="closeSidebar()">
+      <div
+        class="favorites"
+        [routerLink]="['/favorites']"
+        routerLinkActive="active-link"
+        (click)="closeSidebar()"
+      >
         <i class="pi pi-star-fill mr-2"></i>
         <span>Favorite Cities</span>
       </div>
@@ -19,7 +35,7 @@
     <div class="sidebar-footer">
       <div class="user-info">
         <i class="pi pi-user mr-2"></i>
-        <span>Hello, User</span>
+        <span>Hello, {{ userName }}</span>
       </div>
       <button (click)="logout()" class="logout-btn">Logout</button>
     </div>

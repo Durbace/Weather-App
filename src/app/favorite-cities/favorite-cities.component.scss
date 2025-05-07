@@ -1,6 +1,7 @@
 $main-orange: #ff6600;
 $hover-red: red;
 $text-color: #000;
+$gray-medium: #535353;
 $background-glass: rgba(255, 255, 255, 0.5);
 $shadow-default: 0 8px 24px rgba(0, 0, 0, 0.1);
 
@@ -10,7 +11,7 @@ $shadow-default: 0 8px 24px rgba(0, 0, 0, 0.1);
   background-color: $background-glass;
   padding: 32px;
   border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   backdrop-filter: blur(10px);
   box-shadow: $shadow-default;
 
@@ -69,5 +70,89 @@ $shadow-default: 0 8px 24px rgba(0, 0, 0, 0.1);
     &:hover {
       color: $hover-red;
     }
+  }
+}
+
+.favorites-page {
+  background: linear-gradient(to bottom right, #ff6600, #ffffff);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.custom-sidebar-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .bar {
+    width: 18px;
+    height: 2.5px;
+    background-color: #ff6600;
+    border-radius: 2px;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.custom-spinner {
+  ::ng-deep .p-progress-spinner {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  ::ng-deep circle {
+    stroke: $main-orange !important;
+  }
+}
+
+.no-favorites-box {
+  max-width: 500px;
+  margin: 60px auto;
+  padding: 30px;
+  text-align: center;
+  background-color: $background-glass;
+  border-radius: 16px;
+  font-family: "Poppins", sans-serif;
+  box-shadow: $shadow-default;
+  backdrop-filter: blur(10px);
+
+  .icon {
+    font-size: 48px;
+    color: $main-orange;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 20px;
+    color: $text-color;
+    margin-bottom: 8px;
+  }
+
+  small {
+    font-size: 14px;
+    color: $gray-medium;
   }
 }

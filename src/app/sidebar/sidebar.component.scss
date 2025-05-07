@@ -58,9 +58,16 @@ $logout-hover: #e25f07;
     }
   }
 
+  .menu span,
   .menu i,
-  .menu span {
-    color: $primary-orange;
+  .favorites span,
+  .favorites i {
+    color: $gray-medium;
+  }
+
+  .active-link span,
+  .active-link i {
+    color: $primary-orange !important;
   }
 
   .favorites i {
@@ -91,7 +98,7 @@ $logout-hover: #e25f07;
       border-radius: 8px;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       transition: background-color 0.3s ease;
 
       &:hover {
@@ -99,4 +106,36 @@ $logout-hover: #e25f07;
       }
     }
   }
+}
+
+.sidebar-main {
+  margin-bottom: auto;
+
+  .menu,
+  .favorites {
+    margin: 1rem 0;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $gray-dark;
+
+    &:hover {
+      color: $primary-orange;
+    }
+  }
+}
+
+.active-link span,
+.active-link i {
+  color: $primary-orange !important;
 }

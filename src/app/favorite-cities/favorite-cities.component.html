@@ -1,31 +1,67 @@
-<div class="favorites-container" *ngIf="favoriteCities.length > 0; else noFavorites">
-  <h2><i class="pi pi-star text-orange-500 mr-2"></i> Favorite Cities</h2>
+<div class="favorites-page">
+  <button
+    class="custom-sidebar-button"
+    *ngIf="!(visible$ | async)"
+    (click)="openSidebar()"
+  >
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
 
-  <ul>
-    <li *ngFor="let city of favoriteCities">
-      <span>
-        <a
-          class="city-link"
-          [routerLink]="['/city', city.name]"
-          [queryParams]="{ lat: city.latitude, lon: city.longitude }"
-        >
-          <strong>{{ city.name }}</strong>
-        </a>
+  <ng-container *ngIf="!isLoading; else spinner">
+    <ng-container *ngIf="favoriteCities.length > 0; else noFavorites">
+      <div class="favorites-container">
+        <h2><i class="pi pi-star text-orange-500 mr-2"></i> Favorite Cities</h2>
 
-        <span class="ml-2">
-          <i [class]="'pi ' + city.icon" class="mr-1"></i>
-          {{ city.weatherLabel }} |
-          <i class="fa fa-thermometer-half mr-1 ml-2"></i> {{ city.temperature }}°C
-        </span>        
-      </span>
+        <ul>
+          <li *ngFor="let city of favoriteCities">
+            <span>
+              <a
+                class="city-link"
+                [routerLink]="['/city', city.name]"
+                [queryParams]="{ lat: city.latitude, lon: city.longitude }"
+              >
+                <strong>{{ city.name }}</strong>
+              </a>
 
-      <button class="remove-btn" (click)="removeCity(city.name)" title="Remove">
-        <i class="fa fa-trash"></i>
-      </button>
-    </li>
-  </ul>
+              <span class="ml-2">
+                <i [class]="'pi ' + city.icon" class="mr-1"></i>
+                {{ city.weatherLabel }} |
+                <i class="fa fa-thermometer-half mr-1 ml-2"></i>
+                {{ city.temperature }}°C
+              </span>
+            </span>
+
+            <button
+              class="remove-btn"
+              (click)="removeCity(city.name)"
+              title="Remove"
+            >
+              <i class="fa fa-trash"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <ng-template #noFavorites>
+      <div class="no-favorites-box">
+        <i class="pi pi-heart-break icon"></i>
+        <p>No favorite cities yet.</p>
+        <small>You can add some from the city weather page!</small>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <ng-template #spinner>
+    <div class="spinner-container">
+      <p-progressSpinner
+        strokeWidth="4"
+        styleClass="custom-spinner"
+      ></p-progressSpinner>
+    </div>
+  </ng-template>
+
+  <app-sidebar *ngIf="visible$ | async"></app-sidebar>
 </div>
-
-<ng-template #noFavorites>
-  <p class="no-favorites-text">You haven't added any favorites yet.</p>
-</ng-template>
