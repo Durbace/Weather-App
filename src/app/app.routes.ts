@@ -16,9 +16,9 @@ export const routes: Routes = [
   //{ path: '', component: SearchCityComponent }, 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'sidebar', component:SidebarComponent },
+  { path: 'sidebar', component: SidebarComponent },
 
-  { path: '', component: SearchCityComponent, canActivate: [authGuard] },
+  // { path: '', component: SearchCityComponent, canActivate: [authGuard] },
   { path: 'favorites', component: FavoriteCitiesComponent, canActivate: [authGuard] },
   { path: 'city/:name', component: CityDetailsComponent, canActivate: [authGuard] }
   //{ path: 'test_page', component: WeatherHomeComponent}

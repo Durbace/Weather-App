@@ -1,25 +1,27 @@
-<div class="sidebar text-xl">
-  <aside class="sidebar flex flex-column h-screen justify-between">
-
+<div class="sidebar-overlay" *ngIf="visible$ | async"
+  (click)="closeSidebar()"></div>
+<div class="sidebar-container" [class.visible]="(visible$ | async)">
+  <aside class="sidebar">
     <div>
-      <div class="menu my-4 p-4 cursor-pointer hover:bg-gray-100 transition" [routerLink]="['/home']" routerLinkActive>
+      <div class="menu" [routerLink]="['/home']" routerLinkActive
+        (click)="closeSidebar()">
         <i class="pi pi-home mr-2"></i>
         <span>Home</span>
       </div>
 
-      <div class="favorites my-4 p-4 cursor-pointer hover:bg-gray-100 transition" [routerLink]="['/favorites']">
+      <div class="favorites" [routerLink]="['/favorites']"
+        (click)="closeSidebar()">
         <i class="pi pi-star-fill mr-2"></i>
         <span>Favorite Cities</span>
       </div>
     </div>
 
-    <div class="sidebar-footer p-4 flex flex-column gap-3">
+    <div class="sidebar-footer">
       <div class="user-info">
         <i class="pi pi-user mr-2"></i>
         <span>Hello, User</span>
       </div>
       <button (click)="logout()" class="logout-btn">Logout</button>
     </div>
-
   </aside>
 </div>

@@ -5,6 +5,31 @@ $gray-dark: #444;
 $gray-medium: #535353;
 $logout-hover: #e25f07;
 
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 220px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+
+  &.visible {
+    transform: translateX(0);
+  }
+}
+
 .sidebar {
   background-color: $sidebar-bg;
   width: 220px;
@@ -12,45 +37,66 @@ $logout-hover: #e25f07;
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  padding: 1rem;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
   color: $gray-dark;
 
-  .menu {
-    i.pi-home,
+  .menu,
+  .favorites {
+    margin: 1rem 0;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+    i,
     span {
-      color: $primary-orange;
       font-weight: 500;
     }
   }
 
-  .favorites {
-    i.pi-star-fill {
-      color: $yellow-star;
-    }
-
-    span {
-      color: $gray-medium;
-    }
+  .menu i,
+  .menu span {
+    color: $primary-orange;
   }
 
-  .user-info {
-    span,
-    i.pi-user {
-      color: $gray-medium;
-    }
+  .favorites i {
+    color: $yellow-star;
   }
-}
 
-.logout-btn {
-  background-color: $primary-orange;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  transition: background-color 0.3s ease;
+  .favorites span {
+    color: $gray-medium;
+  }
 
-  &:hover {
-    background-color: $logout-hover;
+  .sidebar-footer {
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+
+    .user-info {
+      margin-bottom: 1rem;
+
+      i,
+      span {
+        color: $gray-medium;
+      }
+    }
+
+    .logout-btn {
+      background-color: $primary-orange;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $logout-hover;
+      }
+    }
   }
 }

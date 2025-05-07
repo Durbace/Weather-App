@@ -202,6 +202,6 @@ export class HomepageComponent {
   }
 
   openSidebar() {
-    this.sidebarService.show();
+    this.sidebarService.toggle();
   }
 }

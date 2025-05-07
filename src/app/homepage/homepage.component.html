@@ -1,15 +1,13 @@
 <app-search-city></app-search-city>
 
 <!-- Sidebar Toggle Button -->
-<div class="p-1 ml-4">
+<div class="sidebar-toggle-button">
   <button
     pButton
     icon="pi pi-bars"
     class="p-button-text"
-    (click)="openSidebar()"
-  ></button>
+    (click)="openSidebar()"></button>
 </div>
-
 
 <main class="main-content p-4">
   <div class="flex flex-column gap-4">
@@ -19,8 +17,10 @@
       <ng-template pTemplate="content">
         <div class="relative w-full" style="height: 150px;">
           <div class="absolute left-2 top-2 z-2">
-            <span class="text-surface-500 font-medium text-sm">Current Location</span>
-            <h2 class="text-surface-500 font-bold text-2xl m-0">{{cityName}}</h2>
+            <span class="text-surface-500 font-medium text-sm">Current
+              Location</span>
+            <h2
+              class="text-surface-500 font-bold text-2xl m-0">{{cityName}}</h2>
           </div>
         </div>
       </ng-template>
@@ -45,7 +45,8 @@
                 <div class="col-3">
                   <div class="grid gap-4">
                     <div class="col-12">
-                      <div class="p-8 text-cyan-800 border-round shadow-1 justify-content-center align-items-center bg-blue-300">
+                      <div
+                        class="p-8 text-cyan-800 border-round shadow-1 justify-content-center align-items-center bg-blue-300">
                         {{windSpeed}} kmh/h
                       </div>
                     </div>
@@ -54,7 +55,8 @@
                 <div class="col-3">
                   <div class="grid gap-4">
                     <div class="col-12">
-                      <div class="p-4 border-round shadow-1 text-center bg-blue-300">
+                      <div
+                        class="p-4 border-round shadow-1 text-center bg-blue-300">
                         {{ precipitation }} mm
                       </div>
                     </div>
