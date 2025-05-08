@@ -94,17 +94,17 @@ export class HomepageComponent {
     private weatherService: WeatherService,
     private firestore: Firestore,
     private auth: Auth,
-    private locationService: LocationService
+    private locationService: LocationService,
   ) {}
 
   async ngOnInit() {
     const location =  await this.locationService.getCityName();
     this.cityName = await this.locationService.getCityName();
     this.countryName = await this.locationService.getCountryName();
+    const position = await this.locationService.getCurrentLocation();
+    this.latitude = position.coords.latitude;
+    this.longitude = position.coords.longitude;
     this.route.queryParamMap.subscribe(async (params) => {
-      this.latitude = parseFloat(params.get('lat') || '0');
-      this.longitude = parseFloat(params.get('lon') || '0');
-
       const user = await firstValueFrom(authState(this.auth));
       if (!user) return;
 
