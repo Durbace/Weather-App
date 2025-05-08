@@ -22,6 +22,7 @@ import {
 import { Auth, authState } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, subscribeOn } from 'rxjs';
+import { LocationService } from '../services/current-location.service';
 
 @Component({
   selector: 'app-weather-home',
@@ -41,10 +42,10 @@ import { firstValueFrom, subscribeOn } from 'rxjs';
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent {
-  cityName?: string;
+  cityName = 'Loading...';
+  countryName = 'Loading...';
   latitude = 0;
   longitude = 0;
-
   temperature?: number;
   windSpeed?: number;
   humidity?: number;
@@ -92,14 +93,14 @@ export class HomepageComponent {
     private route: ActivatedRoute,
     private weatherService: WeatherService,
     private firestore: Firestore,
-    private auth: Auth
+    private auth: Auth,
+    private locationService: LocationService
   ) {}
 
   async ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.cityName = params.get('name') || '';
-    });
-
+    const location =  await this.locationService.getCityName();
+    this.cityName = await this.locationService.getCityName();
+    this.countryName = await this.locationService.getCountryName();
     this.route.queryParamMap.subscribe(async (params) => {
       this.latitude = parseFloat(params.get('lat') || '0');
       this.longitude = parseFloat(params.get('lon') || '0');
