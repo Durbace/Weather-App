@@ -4,21 +4,41 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 
+import { HistoryComponent } from './history/history.component';
+import { HistoryModalService } from './services/history-modal.service';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, HistoryComponent],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  template: `<router-outlet></router-outlet>`
+  //template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
   title = 'Weather-App';
   isLoggedIn = false;
+  showHistoryForm = false;
 
-  constructor(private router: Router, private auth: Auth) {
+  constructor(
+    private router: Router,
+    private auth: Auth,
+    private historyModalService: HistoryModalService
+  ) {
     onAuthStateChanged(this.auth, (user) => {
       this.isLoggedIn = !!user;
     });
+
+    this.historyModalService.visible$.subscribe((value) => {
+      this.showHistoryForm = value;
+    });
+  }
+
+  openHistoryForm() {
+    this.showHistoryForm = true;
+  }
+
+  closeHistoryForm() {
+    this.showHistoryForm = false;
   }
 }
