@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Auth, onAuthStateChanged, User } from '@angular/fire/auth';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../services/sidebar.service';
+import { HistoryModalService } from '../services/history-modal.service';
+
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,11 +15,13 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent implements OnInit {
   userName = 'User';
+  showHistoryForm = false;
 
   constructor(
     private auth: Auth,
     private router: Router,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private historyModalService: HistoryModalService
   ) {}
 
   ngOnInit(): void {
@@ -41,5 +45,14 @@ export class SidebarComponent implements OnInit {
 
   closeSidebar() {
     this.sidebarService.hide();
+  }
+
+  openHistoryForm() {
+    this.historyModalService.open();
+    this.closeSidebar();
+  }
+
+  closeHistoryForm() {
+    this.showHistoryForm = false;
   }
 }

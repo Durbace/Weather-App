@@ -42,7 +42,8 @@ $logout-hover: #e25f07;
   color: $gray-dark;
 
   .menu,
-  .favorites {
+  .favorites,
+  .history {
     margin: 1rem 0;
     padding: 0.75rem;
     cursor: pointer;
@@ -58,10 +59,12 @@ $logout-hover: #e25f07;
     }
   }
 
-  .menu span,
   .menu i,
+  .menu span,
   .favorites span,
-  .favorites i {
+  .favorites i,
+  .history i,
+  .history span {
     color: $gray-medium;
   }
 

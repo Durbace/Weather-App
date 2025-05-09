@@ -1,0 +1,61 @@
+<div class="history-overlay" (click)="closeModal()"></div>
+
+<div class="history-modal">
+  <button class="close-button" (click)="closeModal()">×</button>
+  <h2>Weather History</h2>
+
+  <form (ngSubmit)="submitForm()">
+    <label for="city">City:</label>
+    <input
+      id="city"
+      type="text"
+      [(ngModel)]="cityQuery"
+      (input)="onCityInput()"
+      name="city"
+      autocomplete="off"
+      required
+    />
+
+    <ul *ngIf="suggestions.length > 0" class="suggestions">
+      <li *ngFor="let city of suggestions" (click)="selectCity(city)">
+        {{ city.name }}, {{ city.admin1 || "" }}, {{ city.country }}
+      </li>
+    </ul>
+
+    <label for="date">Date:</label>
+    <input
+      type="date"
+      id="date"
+      [(ngModel)]="selectedDate"
+      [max]="maxDate"
+      name="date"
+      required
+    />
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div *ngIf="weatherDetails?.daily" class="result">
+    <h3>Weather in {{ selectedCity?.name }} on {{ selectedDate }}</h3>
+    <p>
+      <strong>Max Temp:</strong>
+      {{ weatherDetails.daily.temperature_2m_max[0] }}°C
+    </p>
+    <p>
+      <strong>Min Temp:</strong>
+      {{ weatherDetails.daily.temperature_2m_min[0] }}°C
+    </p>
+    <p>
+      <strong>Max Wind:</strong>
+      {{ weatherDetails.daily.windspeed_10m_max[0] }} km/h
+    </p>
+    <p>
+      <strong>Sunrise:</strong>
+      {{ weatherDetails.daily.sunrise[0] | date : "shortTime" }}
+    </p>
+    <p>
+      <strong>Sunset:</strong>
+      {{ weatherDetails.daily.sunset[0] | date : "shortTime" }}
+    </p>
+  </div>
+</div>

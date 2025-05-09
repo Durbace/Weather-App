@@ -11,7 +11,9 @@ export class WeatherService {
   }
 
   searchCity(cityName: string) {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}`;
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
+      cityName
+    )}`;
     return this.http.get<any>(url);
   }
 
@@ -29,5 +31,9 @@ export class WeatherService {
     };
     return codes[code] || { icon: '❓', label: 'Unknown' };
   }
-  
+
+  getHistoricalWeather(lat: number, lon: number, date: string) {
+    const url = `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${date}&end_date=${date}&daily=temperature_2m_max,temperature_2m_min,windspeed_10m_max,sunrise,sunset&timezone=auto`;
+    return this.http.get<any>(url);
+  }
 }
