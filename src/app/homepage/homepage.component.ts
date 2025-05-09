@@ -6,6 +6,7 @@ import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { SearchCityComponent } from '../search-city/search-city.component';
 import { SidebarModule } from 'primeng/sidebar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { WeatherService } from '../services/weather.service';
 import { SidebarService } from '../services/sidebar.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
@@ -37,6 +38,7 @@ import { LocationService } from '../services/current-location.service';
     SidebarModule,
     SearchCityComponent,
     SidebarComponent,
+    ProgressSpinnerModule,
   ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
@@ -57,6 +59,8 @@ export class HomepageComponent {
   isFavorite = false;
   sidebarVisible: boolean = false;
   isHeaderHidden = false;
+  isLoading = true;
+  isLoadingLocation = true;
   cardTitles = [
     'Temperature card',
     'Precipitation (rain + showers + snow)',
@@ -66,26 +70,18 @@ export class HomepageComponent {
     'Apparent Temperature',
   ];
 
-  chartData = {
-    labels: [
-      '13 Mar',
-      '14 Mar',
-      '15 Mar',
-      '16 Mar',
-      '17 Mar',
-      '18 Mar',
-      '19 Mar',
-      '20 Mar',
-    ],
-    datasets: [
-      {
-        label: 'Temperature',
-        data: [12, 24, 18, 27, 20, 10, 5, 15],
-        fill: false,
-        borderColor: '#42A5F5',
-        tension: 0.35,
-      },
-    ],
+  chartData: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      fill: boolean;
+      borderColor: string;
+      tension: number;
+    }[];
+  } = {
+    labels: [],
+    datasets: [],
   };
 
   constructor(
@@ -94,16 +90,64 @@ export class HomepageComponent {
     private weatherService: WeatherService,
     private firestore: Firestore,
     private auth: Auth,
-    private locationService: LocationService,
+    private locationService: LocationService
   ) {}
 
   async ngOnInit() {
-    const location =  await this.locationService.getCityName();
+    const location = await this.locationService.getCityName();
     this.cityName = await this.locationService.getCityName();
     this.countryName = await this.locationService.getCountryName();
+    this.isLoadingLocation = false;
     const position = await this.locationService.getCurrentLocation();
     this.latitude = position.coords.latitude;
     this.longitude = position.coords.longitude;
+    this.isLoading = false;
+
+    const pastDates = this.getPastDates(7);
+    const tempLabels: string[] = [];
+    const tempValues: number[] = [];
+    const minTempValues: number[] = [];
+
+    for (const date of pastDates) {
+      const readable = new Date(date).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+      });
+      tempLabels.push(readable);
+
+      const data = await firstValueFrom(
+        this.weatherService.getHistoricalWeather(
+          this.latitude,
+          this.longitude,
+          date
+        )
+      );
+      const maxTemp = data.daily.temperature_2m_max[0];
+      const minTemp = data.daily.temperature_2m_min[0];
+      tempValues.push(maxTemp);
+      minTempValues.push(minTemp);
+    }
+
+    this.chartData = {
+      labels: tempLabels,
+      datasets: [
+        {
+          label: 'Max Temperature',
+          data: tempValues,
+          fill: false,
+          borderColor: '#42A5F5',
+          tension: 0.35,
+        },
+        {
+          label: 'Min Temperature',
+          data: minTempValues,
+          fill: false,
+          borderColor: '#FFA726',
+          tension: 0.35,
+        },
+      ],
+    };
+
     this.route.queryParamMap.subscribe(async (params) => {
       const user = await firstValueFrom(authState(this.auth));
       if (!user) return;
@@ -115,6 +159,7 @@ export class HomepageComponent {
           this.temperature = Math.round(current.temperature * 10) / 10;
           this.windSpeed = Math.round(current.windspeed * 10) / 10;
           this.weatherCode = current.weathercode;
+          this.isLoading = false;
 
           this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString(
             [],
@@ -201,5 +246,17 @@ export class HomepageComponent {
 
   openSidebar() {
     this.sidebarService.toggle();
+  }
+
+  getPastDates(days: number): string[] {
+    const result: string[] = [];
+    const now = new Date();
+    for (let i = days; i >= 1; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      result.push(d.toISOString().slice(0, 10));
+    }
+
+    return result;
   }
 }

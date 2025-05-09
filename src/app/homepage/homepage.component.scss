@@ -391,3 +391,45 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
     transform: scale(1.05);
   }
 }
+
+.loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.centered-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 2rem;
+}
+
+.css-spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #ffd4b3;
+  border-top-color: #ff6600;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ff6600;
+}

@@ -16,15 +16,22 @@
     <div class="location-wrapper">
       <p-card class="shadow-3 border-round-lg overflow-hidden">
         <ng-template pTemplate="content">
-          <div class="location-card">
-            <div class="background-overlay"></div>
-
-            <div class="location-text">
-              <span>Current Location</span>
-              <h2>{{ cityName }}</h2>
-              <h1> {{ countryName }}</h1>
+          <ng-container *ngIf="!isLoadingLocation; else loadingLocation">
+            <div class="location-card">
+              <div class="background-overlay"></div>
+              <div class="location-text">
+                <span>Current Location</span>
+                <h2>{{ cityName }}</h2>
+                <h1>{{ countryName }}</h1>
+              </div>
             </div>
-          </div>
+          </ng-container>
+          <ng-template #loadingLocation>
+            <div class="location-card centered-loading">
+              <div class="css-spinner"></div>
+              <p class="loading-text">Loading location...</p>
+            </div>
+          </ng-template>
         </ng-template>
       </p-card>
     </div>
@@ -33,53 +40,57 @@
       <h3 class="highlight-title">Today's highlight</h3>
       <p-card class="border-round-lg p-3 text-xl mb-4">
         <ng-template pTemplate="content">
-          <div class="flex justify-content-start flex-wrap">
-            <div class="highlight-row">
-              <div class="weather-grid">
-                <div class="weather-card temperature-card">
-                  <span class="label">Temperature</span>
-                  <span class="value">{{ temperature }}°C</span>
-                </div>
-
-                <div class="weather-card wind-card">
-                  <span class="label">Wind Speed</span>
-                  <span class="value">{{ windSpeed }} kmh/h</span>
-                </div>
-
-                <div class="weather-card precipitation-card">
-                  <span class="label">Precipitation</span>
-                  <span class="value">{{ precipitation }} mm</span>
-                </div>
-
-                <div class="side-group">
-                  <div class="weather-card sunrise-card">
-                    <span class="label">Sunrise</span>
-                    <span class="value">{{ sunrise }}</span>
+          <ng-container *ngIf="!isLoading; else loadingSpinner">
+            <div class="flex justify-content-start flex-wrap">
+              <div class="highlight-row">
+                <div class="weather-grid">
+                  <div class="weather-card temperature-card">
+                    <span class="label">Temperature</span>
+                    <span class="value">{{ temperature }}°C</span>
                   </div>
-
-                  <div class="weather-card sunset-card">
-                    <span class="label">Sunset</span>
-                    <span class="value">{{ sunset }}</span>
+                  <div class="weather-card wind-card">
+                    <span class="label">Wind Speed</span>
+                    <span class="value">{{ windSpeed }} kmh/h</span>
                   </div>
-
-                  <div class="weather-card humidity-card">
-                    <span class="label">Humidity</span>
-                    <span class="value">{{ humidity }}%</span>
+                  <div class="weather-card precipitation-card">
+                    <span class="label">Precipitation</span>
+                    <span class="value">{{ precipitation }} mm</span>
+                  </div>
+                  <div class="side-group">
+                    <div class="weather-card sunrise-card">
+                      <span class="label">Sunrise</span>
+                      <span class="value">{{ sunrise }}</span>
+                    </div>
+                    <div class="weather-card sunset-card">
+                      <span class="label">Sunset</span>
+                      <span class="value">{{ sunset }}</span>
+                    </div>
+                    <div class="weather-card humidity-card">
+                      <span class="label">Humidity</span>
+                      <span class="value">{{ humidity }}%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="chart-container">
-                <div class="highlight-chart-wrapper">
-                  <p-chart
-                    type="line"
-                    [data]="chartData"
-                    [style.width]="'100%'"
-                    [style.height]="'350px'"
-                  ></p-chart>
+                <div class="chart-container">
+                  <div class="highlight-chart-wrapper">
+                    <p-chart
+                      type="line"
+                      [data]="chartData"
+                      [style.width]="'100%'"
+                      [style.height]="'350px'"
+                    ></p-chart>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </ng-container>
+
+          <ng-template #loadingSpinner>
+            <div class="loading-wrapper">
+              <div class="css-spinner"></div>
+              <p class="loading-text">Loading data...</p>
+            </div>
+          </ng-template>
         </ng-template>
       </p-card>
     </div>
