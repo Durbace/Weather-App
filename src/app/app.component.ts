@@ -13,7 +13,6 @@ import { HistoryModalService } from './services/history-modal.service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  //template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
   title = 'Weather-App';

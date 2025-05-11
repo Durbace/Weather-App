@@ -1,0 +1,206 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+<div *ngIf="!isLoading" class="auth-gradient-background">
+  <div class="section">
+    <div class="container">
+      <div class="row full-height justify-content-center">
+        <div class="col-12 text-center align-self-center py-5">
+          <div class="section pb-5 pt-5 pt-sm-2 text-center">
+            <h6 class="mb-0 pb-3">
+              <span [ngClass]="!isSignup ? 'active-tab' : ''">Log In </span>
+              <span [ngClass]="isSignup ? 'active-tab' : ''">Sign Up</span>
+            </h6>
+            <input
+              class="checkbox"
+              type="checkbox"
+              id="reg-log"
+              [(ngModel)]="isSignup"
+            />
+            <label for="reg-log"></label>
+
+            <div class="card-3d-wrap mx-auto">
+              <div class="card-3d-wrapper" [class.flipped]="isSignup">
+                <div class="card-front">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-4 pb-3">Log In</h4>
+                      <form (ngSubmit)="onLogin()">
+                        <div class="form-group">
+                          <input
+                            type="email"
+                            [(ngModel)]="email"
+                            name="loginEmail"
+                            class="form-style"
+                            placeholder="Email"
+                            required
+                          />
+                          <i class="input-icon uil uil-at"></i>
+                          <div
+                            *ngIf="loginEmailError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ loginEmailError }}
+                          </div>
+                        </div>
+                        <div class="form-group mt-2 position-relative">
+                          <input
+                            [type]="showPasswordLogin ? 'text' : 'password'"
+                            [(ngModel)]="password"
+                            name="loginPassword"
+                            class="form-style"
+                            placeholder="Password"
+                            required
+                          />
+                          <i class="input-icon uil uil-lock-alt"></i>
+                          <i
+                            class="toggle-eye uil"
+                            [class.uil-eye]="!showPasswordLogin"
+                            [class.uil-eye-slash]="showPasswordLogin"
+                            (click)="showPasswordLogin = !showPasswordLogin"
+                          >
+                          </i>
+                          <div
+                            *ngIf="loginPasswordError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ loginPasswordError }}
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn mt-4">Login</button>
+                      </form>
+                      <p class="mb-0 mt-4 text-center">
+                        <a
+                          href="#"
+                          class="link"
+                          (click)="$event.preventDefault(); resetPassword()"
+                          >Forgot your password?</a
+                        >
+                      </p>
+                      <div *ngIf="resetMessage" class="mt-3">
+                        <p
+                          [ngClass]="
+                            resetSuccess ? 'text-success' : 'text-danger'
+                          "
+                        >
+                          {{ resetMessage }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-back">
+                  <div class="center-wrap">
+                    <div class="section text-center">
+                      <h4 class="mb-3 pb-3">Sign Up</h4>
+                      <form (ngSubmit)="onSignup()">
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            [(ngModel)]="fullName"
+                            name="signupName"
+                            class="form-style"
+                            placeholder="Full Name"
+                            required
+                          />
+                          <i class="input-icon uil uil-user"></i>
+                          <div
+                            *ngIf="signupNameError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ signupNameError }}
+                          </div>
+                        </div>
+                        <div class="form-group mt-2">
+                          <input
+                            type="email"
+                            [(ngModel)]="email"
+                            name="signupEmail"
+                            class="form-style"
+                            placeholder="Email"
+                            required
+                          />
+                          <i class="input-icon uil uil-at"></i>
+                          <div
+                            *ngIf="signupEmailError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ signupEmailError }}
+                          </div>
+                        </div>
+                        <div class="form-group mt-2 position-relative">
+                          <input
+                            [type]="showPasswordSignup ? 'text' : 'password'"
+                            [(ngModel)]="password"
+                            name="signupPassword"
+                            class="form-style"
+                            placeholder="Password"
+                            required
+                          />
+                          <i class="input-icon uil uil-lock-alt"></i>
+                          <i
+                            class="toggle-eye uil"
+                            [class.uil-eye]="!showPasswordSignup"
+                            [class.uil-eye-slash]="showPasswordSignup"
+                            (click)="showPasswordSignup = !showPasswordSignup"
+                          >
+                          </i>
+                          <div
+                            *ngIf="signupPasswordError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ signupPasswordError }}
+                          </div>
+                        </div>
+
+                        <div class="form-group mt-2 position-relative">
+                          <input
+                            [type]="showPasswordConfirm ? 'text' : 'password'"
+                            [(ngModel)]="passwordConfirm"
+                            name="signupPasswordConfirm"
+                            class="form-style"
+                            placeholder="Confirm Password"
+                            required
+                          />
+                          <i class="input-icon uil uil-lock-alt"></i>
+                          <i
+                            class="toggle-eye uil"
+                            [class.uil-eye]="!showPasswordConfirm"
+                            [class.uil-eye-slash]="showPasswordConfirm"
+                            (click)="showPasswordConfirm = !showPasswordConfirm"
+                          >
+                          </i>
+                          <div
+                            *ngIf="signupPasswordConfirmError"
+                            class="text-danger small mt-1"
+                          >
+                            {{ signupPasswordConfirmError }}
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn mt-4">Register</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-center mt-3">
+                <a [routerLink]="isSignup ? '/login' : '/signup'" class="link">
+                </a>
+              </p>
+            </div>
+            <div
+              *ngIf="registeredMessage && !isSignup"
+              class="mt-3 text-success message-success"
+            >
+              <strong>Account created!</strong> You can now log in.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

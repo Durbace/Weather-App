@@ -27,6 +27,8 @@
               }
             ],
             "styles": [
+              "https://unicons.iconscout.com/release/v2.1.9/css/unicons.css",
+              "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css",
               "node_modules/primeflex/themes/primeone-light.scss",
               "node_modules/primeflex/primeflex.scss",
               "node_modules/primeflex/primeflex.min.css",
