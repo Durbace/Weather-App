@@ -142,3 +142,17 @@ $logout-hover: #e25f07;
 .active-link i {
   color: $primary-orange !important;
 }
+
+@media (max-width: 768px) {
+
+  .sidebar-container,
+  .sidebar {
+    height: 100vh;
+  }
+
+  .sidebar-footer .logout-btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+  }
+}
