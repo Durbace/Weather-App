@@ -1,3 +1,4 @@
+<div class="homepage-background"></div>
 <header class="main-header">
   <div class="header-content">
     <button
@@ -47,8 +48,10 @@
                   <div class="weather-card temperature-card">
                     <span class="label">Temperature</span>
                     <span class="value">
-  {{ temperature }}°{{ (unit$ | async) === 'F' ? 'F' : 'C' }}
-</span>
+                      {{ temperature }}°{{
+                        (unit$ | async) === "F" ? "F" : "C"
+                      }}
+                    </span>
                   </div>
                   <div class="weather-card wind-card">
                     <span class="label">Wind Speed</span>

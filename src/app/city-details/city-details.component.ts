@@ -122,7 +122,7 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.body.style.backgroundImage = '';
-    document.body.style.backgroundColor = '#eaeaea';
+    document.body.style.backgroundColor = '';
   }
 
   getClosestTimeIndex(targetTime: string, timeArray: string[]): number {
