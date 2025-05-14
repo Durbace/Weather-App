@@ -6,10 +6,12 @@ import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { SearchCityComponent } from '../search-city/search-city.component';
 import { SidebarModule } from 'primeng/sidebar';
+
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { WeatherService } from '../services/weather.service';
 import { SidebarService } from '../services/sidebar.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { TemperatureUnitService } from '../services/temperature-unit.service';
 import {
   Firestore,
   collection,
@@ -22,7 +24,7 @@ import {
 } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
 import { ActivatedRoute } from '@angular/router';
-import { firstValueFrom, subscribeOn } from 'rxjs';
+import { firstValueFrom, Observable, subscribeOn } from 'rxjs';
 import { LocationService } from '../services/current-location.service';
 
 @Component({
@@ -61,6 +63,11 @@ export class HomepageComponent {
   isHeaderHidden = false;
   isLoading = true;
   isLoadingLocation = true;
+  unit$!: Observable<'C' | 'F'>;
+  private rawMaxTempsCelsius: number[] = [];
+  private rawMinTempsCelsius: number[] = [];
+  private rawTemperatureCelsius = 0;
+
   cardTitles = [
     'Temperature card',
     'Precipitation (rain + showers + snow)',
@@ -90,7 +97,8 @@ export class HomepageComponent {
     private weatherService: WeatherService,
     private firestore: Firestore,
     private auth: Auth,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private temperatureUnitService: TemperatureUnitService
   ) {}
 
   async ngOnInit() {
@@ -102,6 +110,11 @@ export class HomepageComponent {
     this.latitude = position.coords.latitude;
     this.longitude = position.coords.longitude;
     this.isLoading = false;
+    this.unit$ = this.temperatureUnitService.unit$;
+    this.unit$.subscribe(() => {
+      this.updateConvertedTemperature();
+      this.updateChartData();
+    });
 
     const pastDates = this.getPastDates(7);
     const tempLabels: string[] = [];
@@ -124,29 +137,12 @@ export class HomepageComponent {
       );
       const maxTemp = data.daily.temperature_2m_max[0];
       const minTemp = data.daily.temperature_2m_min[0];
-      tempValues.push(maxTemp);
-      minTempValues.push(minTemp);
+      this.rawMaxTempsCelsius.push(maxTemp);
+      this.rawMinTempsCelsius.push(minTemp);
     }
 
-    this.chartData = {
-      labels: tempLabels,
-      datasets: [
-        {
-          label: 'Max Temperature',
-          data: tempValues,
-          fill: false,
-          borderColor: '#42A5F5',
-          tension: 0.35,
-        },
-        {
-          label: 'Min Temperature',
-          data: minTempValues,
-          fill: false,
-          borderColor: '#FFA726',
-          tension: 0.35,
-        },
-      ],
-    };
+    this.chartData.labels = tempLabels;
+    this.updateChartData();
 
     this.route.queryParamMap.subscribe(async (params) => {
       const user = await firstValueFrom(authState(this.auth));
@@ -156,10 +152,12 @@ export class HomepageComponent {
         .getCurrentWeather(this.latitude, this.longitude)
         .subscribe((data) => {
           const current = data.current_weather;
-          this.temperature = Math.round(current.temperature * 10) / 10;
+          this.temperature = this.convertTemperature(current.temperature);
           this.windSpeed = Math.round(current.windspeed * 10) / 10;
           this.weatherCode = current.weathercode;
           this.isLoading = false;
+          this.rawTemperatureCelsius = current.temperature;
+          this.updateConvertedTemperature();
 
           this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString(
             [],
@@ -258,5 +256,45 @@ export class HomepageComponent {
     }
 
     return result;
+  }
+
+  convertTemperature(tempCelsius: number): number {
+    if (this.temperatureUnitService.currentUnit === 'F') {
+      return Math.round((tempCelsius * 9) / 5 + 32);
+    }
+    return Math.round(tempCelsius);
+  }
+
+  convertChartTemperatures(values: number[]): number[] {
+    return values.map((val) => this.convertTemperature(val));
+  }
+
+  updateChartData() {
+    const convertedMax = this.convertChartTemperatures(this.rawMaxTempsCelsius);
+    const convertedMin = this.convertChartTemperatures(this.rawMinTempsCelsius);
+
+    this.chartData = {
+      ...this.chartData,
+      datasets: [
+        {
+          label: 'Max Temperature',
+          data: convertedMax,
+          fill: false,
+          borderColor: '#42A5F5',
+          tension: 0.35,
+        },
+        {
+          label: 'Min Temperature',
+          data: convertedMin,
+          fill: false,
+          borderColor: '#FFA726',
+          tension: 0.35,
+        },
+      ],
+    };
+  }
+
+  updateConvertedTemperature() {
+    this.temperature = this.convertTemperature(this.rawTemperatureCelsius);
   }
 }

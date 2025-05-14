@@ -18,10 +18,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { WeatherService } from '../services/weather.service';
 import { SidebarService } from '../services/sidebar.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { TemperatureUnitService } from '../services/temperature-unit.service';
 
 interface FavoriteCityWeather {
   name: string;
-  temperature: number;
+  rawTempC: number;
   weatherLabel: string;
   icon: string;
   latitude: number;
@@ -49,6 +50,7 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
   private firestore = inject(Firestore);
   private auth = inject(Auth);
   private sidebarService = inject(SidebarService);
+  public temperatureUnitService = inject(TemperatureUnitService);
 
   isLoading = true;
 
@@ -103,7 +105,7 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
 
           return {
             name: city.name,
-            temperature: Math.round(current.temperature),
+            rawTempC: current.temperature,
             weatherLabel: weather.label,
             icon: weather.icon,
             latitude: city.latitude,
@@ -127,7 +129,7 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
           const weather = this.weatherService.getWeatherIcon(
             current.weathercode || 0
           );
-          city.temperature = Math.round(current.temperature);
+          city.rawTempC = current.temperature;
           city.weatherLabel = weather.label;
           city.icon = weather.icon;
         })
@@ -166,5 +168,18 @@ export class FavoriteCitiesComponent implements OnInit, OnDestroy {
 
   get visible$() {
     return this.sidebarService.visible$;
+  }
+
+  convertTemperature(tempCelsius: number): number {
+    if (this.temperatureUnitService.currentUnit === 'F') {
+      return Math.round((tempCelsius * 9) / 5 + 32);
+    }
+    return Math.round(tempCelsius);
+  }
+
+  getTemperature(rawCelsius: number): number {
+    return this.temperatureUnitService.currentUnit === 'F'
+      ? Math.round((rawCelsius * 9) / 5 + 32)
+      : Math.round(rawCelsius);
   }
 }

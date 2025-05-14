@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Auth, authState } from '@angular/fire/auth';
@@ -15,13 +15,16 @@ import {
 import { firstValueFrom } from 'rxjs';
 
 import { WeatherService } from '../services/weather.service';
+import { TemperatureUnitService } from '../services/temperature-unit.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { SidebarService } from '../services/sidebar.service';
 
 @Component({
   selector: 'app-city-details',
   templateUrl: './city-details.component.html',
   styleUrls: ['./city-details.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarComponent],
 })
 export class CityDetailsComponent implements OnInit, OnDestroy {
   cityName = '';
@@ -40,6 +43,10 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
   isFavorite = false;
   hover = false;
   weatherDisplay?: { icon: string; label: string };
+  private rawTemperatureCelsius = 0;
+
+  public temperatureUnitService = inject(TemperatureUnitService);
+  public sidebarService = inject(SidebarService);
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +73,18 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
         .getCurrentWeather(this.latitude, this.longitude)
         .subscribe((data) => {
           const current = data.current_weather;
-          this.temperature = Math.round(current.temperature * 10) / 10;
+
+          this.rawTemperatureCelsius = current.temperature;
+          this.temperature = this.convertTemperature(
+            this.rawTemperatureCelsius
+          );
+
+          this.temperatureUnitService.unit$.subscribe(() => {
+            this.temperature = this.convertTemperature(
+              this.rawTemperatureCelsius
+            );
+          });
+
           this.windSpeed = Math.round(current.windspeed * 10) / 10;
           this.weatherCode = current.weathercode;
           this.weatherDisplay = this.weatherService.getWeatherIcon(
@@ -78,10 +96,7 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
 
           this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString(
             [],
-            {
-              hour: '2-digit',
-              minute: '2-digit',
-            }
+            { hour: '2-digit', minute: '2-digit' }
           );
           this.sunset = new Date(data.daily.sunset[0]).toLocaleTimeString([], {
             hour: '2-digit',
@@ -90,7 +105,6 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
 
           const currentHour = current.time;
           const hourlyTimes: string[] = data.hourly.time;
-
           let index = hourlyTimes.findIndex((t) => t === currentHour);
           if (index === -1) {
             index = this.getClosestTimeIndex(currentHour, hourlyTimes);
@@ -190,5 +204,24 @@ export class CityDetailsComponent implements OnInit, OnDestroy {
         this.isFavorite = !snapshot.empty;
       }
     );
+  }
+
+  convertTemperature(tempCelsius: number): number {
+    if (this.temperatureUnitService.currentUnit === 'F') {
+      return Math.round((tempCelsius * 9) / 5 + 32);
+    }
+    return Math.round(tempCelsius);
+  }
+
+  getTemperature(): number {
+    return this.convertTemperature(this.rawTemperatureCelsius);
+  }
+
+  openSidebar() {
+    this.sidebarService.toggle();
+  }
+
+  get visible$() {
+    return this.sidebarService.visible$;
   }
 }

@@ -11,6 +11,20 @@
       </button>
     </div>
     <div class="sidebar-main">
+      <div class="unit-toggle">
+        <label class="switch">
+          <input
+            type="checkbox"
+            (change)="toggleTemperatureUnit()"
+            [checked]="(unit$ | async) === 'F'"
+          />
+          <span class="slider"></span>
+        </label>
+        <span class="unit-label">{{
+          (unit$ | async) === "F" ? "°F" : "°C"
+        }}</span>
+      </div>
+
       <div
         class="menu"
         [routerLink]="['/home']"

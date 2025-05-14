@@ -29,7 +29,9 @@
                 <i [class]="'pi ' + city.icon" class="mr-1"></i>
                 {{ city.weatherLabel }} |
                 <i class="fa fa-thermometer-half mr-1 ml-2"></i>
-                {{ city.temperature }}°C
+                {{ getTemperature(city.rawTempC) }}°{{
+                  temperatureUnitService.unit$ | async
+                }}
               </span>
             </span>
 
