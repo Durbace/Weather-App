@@ -203,3 +203,20 @@ $logout-hover: #e25f07;
     margin-left: 0.75rem;
   }
 }
+
+.globe {
+  margin: 1rem 0;
+  padding: 0.75rem;
+  cursor: pointer;
+  border-radius: 8px;
+
+  i,
+  span {
+    font-weight: 500;
+    color: $gray-medium;
+  }
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}

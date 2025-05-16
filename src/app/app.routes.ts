@@ -7,6 +7,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { RedirectorComponent } from './redirector.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AuthComponent } from './auth/auth.component';
+import { GlobeComponent } from './globe/globe.component';
 
 export const routes: Routes = [
   { path: '', component: RedirectorComponent },
@@ -29,4 +30,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   //{ path: 'test_page', component: WeatherHomeComponent}
+
+  {
+    path: 'globe',
+    component: GlobeComponent,
+    canActivate: [authGuard],
+  },
 ];

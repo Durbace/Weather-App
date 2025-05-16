@@ -1,0 +1,51 @@
+<button
+  class="custom-sidebar-button"
+  *ngIf="!(sidebarService.visible$ | async)"
+  (click)="sidebarService.toggle()"
+>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<app-sidebar *ngIf="sidebarService.visible$ | async"></app-sidebar>
+
+<div #cesiumContainer class="cesium-container"></div>
+
+<div class="weather-modal" *ngIf="showModal()">
+  <div class="modal-content">
+    <button class="close-btn" (click)="showModal.set(false)">
+      <i class="pi pi-times"></i>
+    </button>
+    <h3>
+      Weather at {{ lat() | number : "1.2-2" }}, {{ lon() | number : "1.2-2" }}
+    </h3>
+
+    <div *ngIf="weather(); else loading">
+      <p>
+        <i class="pi pi-sun mr-2"></i>
+        <strong>Temperature:</strong> {{ weather().temperature }} °C
+      </p>
+      <p>
+        <i class="pi pi-send mr-2"></i>
+        <strong>Windspeed:</strong> {{ weather().windspeed }} km/h
+      </p>
+      <p>
+        <i class="pi pi-arrow-up mr-2"></i>
+        <strong>Sunrise:</strong> {{ sunrise() }}
+      </p>
+      <p>
+        <i class="pi pi-arrow-down mr-2"></i>
+        <strong>Sunset:</strong> {{ sunset() }}
+      </p>
+      <p>
+        <i [ngClass]="icon() + ' mr-2'"></i>
+        <strong>{{ label() }}</strong>
+      </p>
+    </div>
+
+    <ng-template #loading>
+      <p>Loading weather...</p>
+    </ng-template>
+  </div>
+</div>

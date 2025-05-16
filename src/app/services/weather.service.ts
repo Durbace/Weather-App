@@ -19,17 +19,18 @@ export class WeatherService {
 
   getWeatherIcon(code: number): { icon: string; label: string } {
     const codes: { [key: number]: { icon: string; label: string } } = {
-      0: { icon: '☀️', label: 'Clear sky' },
-      1: { icon: '🌤️', label: 'Mainly clear' },
-      2: { icon: '⛅', label: 'Partly cloudy' },
-      3: { icon: '☁️', label: 'Overcast' },
-      45: { icon: '🌫️', label: 'Fog' },
-      51: { icon: '🌦️', label: 'Drizzle' },
-      61: { icon: '🌧️', label: 'Rain' },
-      71: { icon: '🌨️', label: 'Snow' },
-      95: { icon: '⛈️', label: 'Thunderstorm' },
+      0: { icon: 'pi pi-sun', label: 'Clear sky' },
+      1: { icon: 'pi pi-sun', label: 'Mainly clear' },
+      2: { icon: 'pi pi-cloud', label: 'Partly cloudy' },
+      3: { icon: 'pi pi-cloud', label: 'Overcast' },
+      45: { icon: 'pi pi-cloud', label: 'Fog' },
+      51: { icon: 'pi pi-cloud', label: 'Drizzle' },
+      61: { icon: 'pi pi-cloud', label: 'Rain' },
+      71: { icon: 'pi pi-cloud', label: 'Snow' },
+      95: { icon: 'pi pi-bolt', label: 'Thunderstorm' },
     };
-    return codes[code] || { icon: '❓', label: 'Unknown' };
+
+    return codes[code] || { icon: 'pi-question-circle', label: 'Unknown' };
   }
 
   getHistoricalWeather(lat: number, lon: number, date: string) {

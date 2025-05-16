@@ -45,6 +45,16 @@
         <span>Favorite Cities</span>
       </div>
 
+      <div
+        class="globe"
+        [routerLink]="['/globe']"
+        routerLinkActive="active-link"
+        (click)="closeSidebar()"
+      >
+        <i class="pi pi-globe mr-2"></i>
+        <span>Interactive Globe</span>
+      </div>
+
       <div class="history" (click)="openHistoryForm()">
         <i class="pi pi-clock mr-2"></i>
         <span>History</span>
