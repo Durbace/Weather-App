@@ -24,7 +24,9 @@
     <div *ngIf="weather(); else loading">
       <p>
         <i class="pi pi-sun mr-2"></i>
-        <strong>Temperature:</strong> {{ weather().temperature }} °C
+        <strong>Temperature:</strong>
+        {{ convertTemperature(weather().temperature) | number : "1.0-1" }}
+        °{{ unit() }}
       </p>
       <p>
         <i class="pi pi-send mr-2"></i>

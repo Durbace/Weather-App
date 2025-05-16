@@ -13,6 +13,7 @@ import { WeatherService } from '../services/weather.service';
 import { GlobeService } from '../services/globe.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { SidebarService } from '../services/sidebar.service';
+import { TemperatureUnitService } from '../services/temperature-unit.service';
 
 @Component({
   selector: 'app-globe',
@@ -27,6 +28,7 @@ export class GlobeComponent implements AfterViewInit {
   private weatherService = inject(WeatherService);
   private globeService = inject(GlobeService);
   public sidebarService = inject(SidebarService);
+  private tempUnitService = inject(TemperatureUnitService);
 
   showModal = signal(false);
   lat = signal(0);
@@ -36,8 +38,11 @@ export class GlobeComponent implements AfterViewInit {
   label = signal('');
   sunrise = signal('');
   sunset = signal('');
+  unit = signal<'C' | 'F'>(this.tempUnitService.currentUnit);
 
   ngAfterViewInit(): void {
+    this.tempUnitService.unit$.subscribe((unit) => this.unit.set(unit)); 
+    
     const viewer = this.globeService.initializeViewer(
       this.containerRef.nativeElement
     );
@@ -75,5 +80,9 @@ export class GlobeComponent implements AfterViewInit {
         },
       });
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+  }
+
+  convertTemperature(tempC: number): number {
+    return this.unit() === 'C' ? tempC : (tempC * 9) / 5 + 32;
   }
 }
