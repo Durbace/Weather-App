@@ -14,27 +14,46 @@
 
 <main class="main-content p-4">
   <div class="flex flex-column gap-4">
-    <div class="location-wrapper">
-      <p-card class="shadow-3 border-round-lg overflow-hidden">
-        <ng-template pTemplate="content">
-          <ng-container *ngIf="!isLoadingLocation; else loadingLocation">
-            <div class="location-card">
-              <div class="background-overlay"></div>
-              <div class="location-text">
-                <span>Current Location</span>
-                <h2>{{ cityName }}</h2>
-                <h1>{{ countryName }}</h1>
+    <div class="location-joke-row">
+      <div class="location-wrapper">
+        <p-card class="shadow-3 border-round-lg overflow-hidden">
+          <ng-template pTemplate="content">
+            <ng-container *ngIf="!isLoadingLocation; else loadingLocation">
+              <div class="location-card">
+                <div class="background-overlay"></div>
+                <div class="location-text">
+                  <span>Current Location</span>
+                  <h2>{{ cityName }}</h2>
+                  <h1>{{ countryName }}</h1>
+                </div>
               </div>
-            </div>
-          </ng-container>
-          <ng-template #loadingLocation>
-            <div class="location-card centered-loading">
-              <div class="css-spinner"></div>
-              <p class="loading-text">Loading location...</p>
-            </div>
+            </ng-container>
+            <ng-template #loadingLocation>
+              <div class="location-card centered-loading">
+                <div class="css-spinner"></div>
+                <p class="loading-text">Loading location...</p>
+              </div>
+            </ng-template>
           </ng-template>
-        </ng-template>
-      </p-card>
+        </p-card>
+      </div>
+
+      <div class="joke-flex-container">
+        <div class="joke-wrapper">
+          <div class="joke-card">
+            <ng-container *ngIf="!isLoadingJoke; else loadingJoke">
+              <span class="label">Joke of the Day</span>
+              <span class="value" style="white-space: pre-line">{{
+                jokeOfTheDay
+              }}</span>
+            </ng-container>
+            <ng-template #loadingJoke>
+              <div class="css-spinner"></div>
+              <p class="loading-text">Loading joke...</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="highlight-section-box">

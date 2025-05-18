@@ -12,6 +12,8 @@ import { WeatherService } from '../services/weather.service';
 import { SidebarService } from '../services/sidebar.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TemperatureUnitService } from '../services/temperature-unit.service';
+import { JokeService } from '../services/joke.service';
+
 import {
   Firestore,
   collection,
@@ -67,6 +69,8 @@ export class HomepageComponent {
   private rawMaxTempsCelsius: number[] = [];
   private rawMinTempsCelsius: number[] = [];
   private rawTemperatureCelsius = 0;
+  jokeOfTheDay: string = '';
+  isLoadingJoke = true;
 
   cardTitles = [
     'Temperature card',
@@ -98,7 +102,8 @@ export class HomepageComponent {
     private firestore: Firestore,
     private auth: Auth,
     private locationService: LocationService,
-    private temperatureUnitService: TemperatureUnitService
+    private temperatureUnitService: TemperatureUnitService,
+    private jokeService: JokeService
   ) {}
 
   async ngOnInit() {
@@ -114,6 +119,11 @@ export class HomepageComponent {
     this.unit$.subscribe(() => {
       this.updateConvertedTemperature();
       this.updateChartData();
+    });
+    this.isLoadingJoke = true;
+    this.jokeService.getJokeOfTheDay().subscribe((joke: string) => {
+      this.jokeOfTheDay = joke;
+      this.isLoadingJoke = false;
     });
 
     const pastDates = this.getPastDates(7);
