@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { FavoriteCitiesComponent } from './favorite-cities/favorite-cities.component';
-import { CityDetailsComponent } from './city-details/city-details.component';
 import { authGuard } from './services/auth.guard';
 import { HomepageComponent } from './homepage/homepage.component';
 import { RedirectorComponent } from './redirector.component';
@@ -22,11 +21,6 @@ export const routes: Routes = [
   {
     path: 'favorites',
     component: FavoriteCitiesComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: 'city/:name',
-    component: CityDetailsComponent,
     canActivate: [authGuard],
   },
   //{ path: 'test_page', component: WeatherHomeComponent}

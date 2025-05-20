@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CardModule } from 'primeng/card';
@@ -16,44 +15,38 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     FormsModule,
     ReactiveFormsModule,
     AutoCompleteModule,
-    RouterModule,
-    CardModule
+    CardModule,
   ],
   templateUrl: './search-city.component.html',
-  styleUrls: ['./search-city.component.scss']
+  styleUrls: ['./search-city.component.scss'],
 })
 export class SearchCityComponent implements OnInit {
+  @Output() citySelected = new EventEmitter<GeoCity>();
+
   searchControl = new FormControl('');
   suggestions: GeoCity[] = [];
 
-  constructor(private geocodingService: GeocodingService, private router: Router) {}
+  constructor(private geocodingService: GeocodingService) {}
 
   ngOnInit() {
     this.searchControl.valueChanges
       .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((term: string | null) => {
         if (term && term.length >= 2) {
-          this.geocodingService.searchCity(term).subscribe(data => {
+          this.geocodingService.searchCity(term).subscribe((data) => {
             this.suggestions = data;
           });
         } else {
           this.suggestions = [];
         }
-        
       });
   }
 
   selectCity(city: GeoCity) {
-    this.searchControl.setValue(city.name);
+    this.citySelected.emit(city);
     this.suggestions = [];
-    this.router.navigate(['/city', city.name], {
-      queryParams: {
-        country: city.country,
-        admin1: city.admin1,
-        lat: city.latitude,
-        lon: city.longitude
-      }
-    });
+
+    this.searchControl.setValue(city.name, { emitEvent: false });
   }
 
   onEnter() {
@@ -76,9 +69,5 @@ export class SearchCityComponent implements OnInit {
         input.placeholder = 'Search here...';
       }
     }, 100);
-  }
-
-  navigateToFavorites() {
-    this.router.navigate(['/favorites']);
   }
 }

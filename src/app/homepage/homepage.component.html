@@ -8,7 +8,7 @@
       (click)="openSidebar()"
     ></button>
 
-    <app-search-city></app-search-city>
+    <app-search-city (citySelected)="onCitySelected($event)"></app-search-city>
   </div>
 </header>
 
@@ -20,7 +20,15 @@
           <ng-template pTemplate="content">
             <ng-container *ngIf="!isLoadingLocation; else loadingLocation">
               <div class="location-card">
-                <div class="background-overlay"></div>
+                <div
+                  class="background-overlay"
+                  *ngIf="getWeatherBackgroundImage()"
+                  [ngStyle]="{
+                    'background-image':
+                      'url(' + getWeatherBackgroundImage() + ')'
+                  }"
+                ></div>
+
                 <div class="location-text">
                   <span>Current Location</span>
                   <h2>{{ cityName }}</h2>
