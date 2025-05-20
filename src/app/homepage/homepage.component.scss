@@ -166,10 +166,14 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
   align-items: center;
   gap: 1rem;
   grid-template-areas:
-    "temperature wind ."
-    "precipitation side-group .";
-  grid-template-columns: 150px 270px auto;
-  justify-content: start;
+    "temperature wind"
+    "weather-icon side-group";
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.weather-icon-card {
+  grid-area: weather-icon;
+  min-height: 80px;
 }
 
 .weather-card {
@@ -214,8 +218,8 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
 .wind-card {
   grid-area: wind;
 }
-.precipitation-card {
-  grid-area: precipitation;
+.uv-card {
+  grid-area: uv;
 }
 .humidity-card {
   grid-area: humidity;
@@ -227,19 +231,13 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
   grid-area: sunset;
 }
 
-.temperature-card {
-  grid-area: temperature;
-  min-width: 150px;
-}
-
 .wind-card {
   grid-area: wind;
   min-width: 270px;
 }
 
-.precipitation-card {
-  grid-area: precipitation;
-  min-height: 200px;
+.weather-card {
+  width: 100%;
 }
 
 .side-group {
@@ -249,15 +247,13 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
     "sunrise humidity"
     "sunset humidity";
   grid-template-columns: 130px 120px;
-  grid-template-rows: auto auto;
-
-  column-gap: 1rem;
-  row-gap: 1rem;
+  column-gap: 1.5rem;
+  row-gap: 0.75rem;
+  margin-left: 0.5rem;
 
   .sunrise-card,
   .sunset-card {
     min-height: 80px;
-    min-width: unset;
     width: 130px;
   }
 
@@ -269,18 +265,19 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .highlight-row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  align-items: center;
+  align-items: start;
 
   .weather-grid {
-    flex: 1 1 0;
-    min-width: 300px;
+    justify-self: center;
+    width: 100%;
+    max-width: 600px;
   }
 
   .chart-container {
-    margin-left: auto;
+    justify-self: center;
     display: flex;
     align-items: center;
   }
@@ -519,5 +516,55 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
   .joke-wrapper {
     max-width: 400px;
     width: 100%;
+  }
+}
+
+.weather-icon-card {
+  grid-area: weather-icon;
+  width: 130px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $text-gray;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ff6600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .weather-icon {
+    font-size: 1.5rem;
+  }
+}
+
+.uv-card {
+  grid-area: uv;
+}
+
+.weather-icon-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: weather-icon;
+  gap: 0.75rem;
+
+  .weather-icon-card,
+  .uv-card {
+    width: 100%;
+    min-height: 130px;
   }
 }

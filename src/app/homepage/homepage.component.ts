@@ -4,7 +4,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
-import { SearchCityComponent } from '../search-city/search-city.component';
 import { SidebarModule } from 'primeng/sidebar';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -13,6 +12,7 @@ import { SidebarService } from '../services/sidebar.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TemperatureUnitService } from '../services/temperature-unit.service';
 import { JokeService } from '../services/joke.service';
+import { SearchCityComponent } from '../search-city/search-city.component';
 
 import {
   Firestore,
@@ -72,6 +72,7 @@ export class HomepageComponent {
   private rawTemperatureCelsius = 0;
   jokeOfTheDay: string = '';
   isLoadingJoke = true;
+  currentWeather: { icon: string; label: string } | null = null;
 
   cardTitles = [
     'Temperature card',
@@ -99,7 +100,7 @@ export class HomepageComponent {
   constructor(
     public sidebarService: SidebarService,
     private route: ActivatedRoute,
-    private weatherService: WeatherService,
+    public weatherService: WeatherService,
     private firestore: Firestore,
     private auth: Auth,
     private locationService: LocationService,
@@ -325,6 +326,10 @@ export class HomepageComponent {
         this.temperature = this.convertTemperature(current.temperature);
         this.windSpeed = Math.round(current.windspeed * 10) / 10;
         this.weatherCode = current.weathercode;
+        this.currentWeather =
+          this.weatherCode !== undefined
+            ? this.weatherService.getWeatherIcon(this.weatherCode)
+            : null;
 
         this.sunrise = new Date(data.daily.sunrise[0]).toLocaleTimeString([], {
           hour: '2-digit',

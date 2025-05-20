@@ -84,10 +84,23 @@
                     <span class="label">Wind Speed</span>
                     <span class="value">{{ windSpeed }} kmh/h</span>
                   </div>
-                  <div class="weather-card precipitation-card">
-                    <span class="label">Precipitation</span>
-                    <span class="value">{{ precipitation }} mm</span>
+                  <div class="weather-icon-group">
+                    <div class="weather-card weather-icon-card">
+                      <span class="label">{{ currentWeather?.label }}</span>
+                      <span class="value">
+                        <i
+                          [ngClass]="currentWeather?.icon"
+                          class="weather-icon"
+                        ></i>
+                      </span>
+                    </div>
+
+                    <div class="weather-card uv-card">
+                      <span class="label">UV Index</span>
+                      <span class="value">{{ uvIndex }}</span>
+                    </div>
                   </div>
+
                   <div class="side-group">
                     <div class="weather-card sunrise-card">
                       <span class="label">Sunrise</span>
