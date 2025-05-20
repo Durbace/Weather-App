@@ -336,7 +336,16 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .main-header {
-  background: linear-gradient(135deg, #ff6600, #ffa84c);
+  background: linear-gradient(
+    120deg,
+    #ff6b3d,
+    #ff9d35,
+    #ffb854,
+    #ff9d35,
+    #ff6b3d
+  );
+  background-size: 500% 100%;
+  animation: gradientShift 12s ease-in-out infinite;
   padding: 1rem 2rem;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
@@ -369,6 +378,7 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
   }
 }
+
 .custom-sidebar-button {
   width: 2rem;
   height: 2rem;
@@ -566,5 +576,17 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
   .uv-card {
     width: 100%;
     min-height: 130px;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
