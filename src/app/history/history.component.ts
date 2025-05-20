@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HistoryModalService } from '../services/history-modal.service';
+import { HttpClientModule } from '@angular/common/http';
+
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
 import { WeatherService } from '../services/weather.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-history',
@@ -14,23 +14,29 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrls: ['./history.component.scss'],
 })
 export class HistoryComponent {
-  selectedDate: string = '';
-  selectedType: string = 'daily';
+  @ViewChild('resultsSection') resultsSection!: ElementRef;
+
   cityQuery = '';
   suggestions: GeoCity[] = [];
   selectedCity?: GeoCity;
-  weatherDetails: any = null;
+
+  startDate: string = '';
+  endDate: string = '';
   maxDate: string = new Date().toISOString().split('T')[0];
 
+  weatherResults: {
+    date: string;
+    tempMin: number;
+    tempMax: number;
+    wind: number;
+    sunrise: string;
+    sunset: string;
+  }[] = [];
+
   constructor(
-    private historyModalService: HistoryModalService,
     private geocodingService: GeocodingService,
     private weatherService: WeatherService
   ) {}
-
-  closeModal() {
-    this.historyModalService.close();
-  }
 
   onCityInput() {
     if (this.cityQuery.length > 2) {
@@ -48,15 +54,72 @@ export class HistoryComponent {
     this.suggestions = [];
   }
 
-  submitForm() {
-    if (this.selectedCity && this.selectedDate) {
-      const { latitude, longitude } = this.selectedCity;
+  async submitForm() {
+    this.weatherResults = [];
 
-      this.weatherService
-        .getHistoricalWeather(latitude, longitude, this.selectedDate)
-        .subscribe((data) => {
-          this.weatherDetails = data;
-        });
+    if (!this.selectedCity || !this.startDate || !this.endDate) return;
+
+    const current = new Date(this.startDate);
+    const end = new Date(this.endDate);
+    let scrolled = false;
+
+    while (current <= end) {
+      const dateStr = current.toISOString().split('T')[0];
+      const data = await this.weatherService
+        .getHistoricalWeather(
+          this.selectedCity.latitude,
+          this.selectedCity.longitude,
+          dateStr
+        )
+        .toPromise();
+
+      this.weatherResults.push({
+        date: dateStr,
+        tempMin: data.daily.temperature_2m_min[0],
+        tempMax: data.daily.temperature_2m_max[0],
+        wind: data.daily.windspeed_10m_max[0],
+        sunrise: data.daily.sunrise[0],
+        sunset: data.daily.sunset[0],
+      });
+
+      if (!scrolled) {
+        scrolled = true;
+        setTimeout(() => {
+          this.resultsSection?.nativeElement.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }, 50);
+      }
+
+      current.setDate(current.getDate() + 1);
     }
+  }
+
+  clearForm() {
+    this.cityQuery = '';
+    this.suggestions = [];
+    this.selectedCity = undefined;
+    this.startDate = '';
+    this.endDate = '';
+    this.weatherResults = [];
+  }
+
+  formIsValid(): boolean {
+    return (
+      this.cityQuery.trim().length > 0 &&
+      this.selectedCity !== undefined &&
+      this.startDate.trim().length > 0 &&
+      this.endDate.trim().length > 0 &&
+      new Date(this.endDate) >= new Date(this.startDate)
+    );
+  }
+
+  formIsDirty(): boolean {
+    return (
+      this.cityQuery.trim().length > 0 ||
+      this.startDate.trim().length > 0 ||
+      this.endDate.trim().length > 0 ||
+      this.selectedCity !== undefined
+    );
   }
 }

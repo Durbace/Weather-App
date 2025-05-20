@@ -590,3 +590,34 @@ $shadow-lighter: 0 2px 6px rgba(0, 0, 0, 0.05);
     background-position: 0% 50%;
   }
 }
+
+.history-scroll-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-top: 1rem;
+  border-radius: 12px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #ff6600 #ffe8d8;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffe8d8;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 4px;
+  }
+}
+
+.highlight-section-box.no-blur::before {
+  content: none;
+  backdrop-filter: none;
+  background: none;
+}

@@ -18,13 +18,9 @@
         <ul>
           <li *ngFor="let city of favoriteCities">
             <span>
-              <a
-                class="city-link"
-                [routerLink]="['/city', city.name]"
-                [queryParams]="{ lat: city.latitude, lon: city.longitude }"
-              >
+              <span class="city-name">
                 <strong>{{ city.name }}</strong>
-              </a>
+              </span>
 
               <span class="ml-2">
                 <i [class]="'pi ' + city.icon" class="mr-1"></i>

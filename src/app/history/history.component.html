@@ -1,10 +1,5 @@
-<div class="history-overlay" (click)="closeModal()"></div>
-
-<div class="history-modal">
-  <button class="close-button" (click)="closeModal()">×</button>
-  <h2>Weather History</h2>
-
-  <form (ngSubmit)="submitForm()">
+<form class="weather-history-form" (ngSubmit)="submitForm()">
+  <div class="form-group">
     <label for="city">City:</label>
     <input
       id="city"
@@ -15,47 +10,75 @@
       autocomplete="off"
       required
     />
-
     <ul *ngIf="suggestions.length > 0" class="suggestions">
       <li *ngFor="let city of suggestions" (click)="selectCity(city)">
         {{ city.name }}, {{ city.admin1 || "" }}, {{ city.country }}
       </li>
     </ul>
+  </div>
 
-    <label for="date">Date:</label>
+  <div class="form-group">
+    <label for="start">Start Date:</label>
     <input
       type="date"
-      id="date"
-      [(ngModel)]="selectedDate"
+      id="start"
+      [(ngModel)]="startDate"
+      name="start"
       [max]="maxDate"
-      name="date"
       required
     />
+  </div>
 
-    <button type="submit">Submit</button>
-  </form>
+  <div class="form-group">
+    <label for="end">End Date:</label>
+    <input
+      type="date"
+      id="end"
+      [(ngModel)]="endDate"
+      name="end"
+      [max]="maxDate"
+      [min]="startDate"
+      required
+    />
+  </div>
 
-  <div *ngIf="weatherDetails?.daily" class="result">
-    <h3>Weather in {{ selectedCity?.name }} on {{ selectedDate }}</h3>
+  <div class="button-row">
+    <button type="submit" [disabled]="!formIsValid()">Search</button>
+    <button type="button" (click)="clearForm()" [disabled]="!formIsDirty()">
+      Clear
+    </button>
+  </div>
+</form>
+
+<div
+  *ngIf="weatherResults.length > 0"
+  class="result scrollable-result"
+  #resultsSection
+>
+  <h3>Results for {{ selectedCity?.name }}</h3>
+  <div *ngFor="let entry of weatherResults">
     <p>
-      <strong>Max Temp:</strong>
-      {{ weatherDetails.daily.temperature_2m_max[0] }}°C
+      <strong>{{ entry.date }}</strong>
     </p>
     <p>
-      <strong>Min Temp:</strong>
-      {{ weatherDetails.daily.temperature_2m_min[0] }}°C
+      <i class="fa fa-thermometer-full mr-2 text-orange-500"></i>
+      Max: {{ entry.tempMax }}°C |
+      <i class="fa fa-thermometer-empty ml-2 text-cyan-600"></i>
+      Min: {{ entry.tempMin }}°C
     </p>
     <p>
-      <strong>Max Wind:</strong>
-      {{ weatherDetails.daily.windspeed_10m_max[0] }} km/h
+      <i class="pi pi-send mr-2 text-blue-500"></i>
+      Wind: {{ entry.wind }} km/h
     </p>
     <p>
-      <strong>Sunrise:</strong>
-      {{ weatherDetails.daily.sunrise[0] | date : "shortTime" }}
+      <i class="pi pi-sun mr-2 text-yellow-500"></i>
+      Sunrise: {{ entry.sunrise | date : "shortTime" }}
     </p>
     <p>
-      <strong>Sunset:</strong>
-      {{ weatherDetails.daily.sunset[0] | date : "shortTime" }}
+      <i class="pi pi-moon mr-2 text-purple-400"></i>
+      Sunset: {{ entry.sunset | date : "shortTime" }}
     </p>
+
+    <hr />
   </div>
 </div>

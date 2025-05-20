@@ -13,6 +13,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { TemperatureUnitService } from '../services/temperature-unit.service';
 import { JokeService } from '../services/joke.service';
 import { SearchCityComponent } from '../search-city/search-city.component';
+import { HistoryComponent } from '../history/history.component';
 
 import {
   Firestore,
@@ -44,6 +45,7 @@ import { GeoCity } from '../services/geocoding.service';
     SearchCityComponent,
     SidebarComponent,
     ProgressSpinnerModule,
+    HistoryComponent,
   ],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],

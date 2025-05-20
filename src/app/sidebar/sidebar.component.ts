@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { SidebarService } from '../services/sidebar.service';
-import { HistoryModalService } from '../services/history-modal.service';
 import { TemperatureUnitService } from '../services/temperature-unit.service';
 import { Observable } from 'rxjs';
 
@@ -18,14 +17,12 @@ import { Observable } from 'rxjs';
 })
 export class SidebarComponent implements OnInit {
   userName = 'User';
-  showHistoryForm = false;
   unit$!: Observable<'C' | 'F'>;
 
   constructor(
     private auth: Auth,
     private router: Router,
     private sidebarService: SidebarService,
-    private historyModalService: HistoryModalService,
     private temperatureUnitService: TemperatureUnitService
   ) {}
 
@@ -52,15 +49,6 @@ export class SidebarComponent implements OnInit {
 
   closeSidebar() {
     this.sidebarService.hide();
-  }
-
-  openHistoryForm() {
-    this.historyModalService.open();
-    this.closeSidebar();
-  }
-
-  closeHistoryForm() {
-    this.showHistoryForm = false;
   }
 
   toggleTemperatureUnit() {
