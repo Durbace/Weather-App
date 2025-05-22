@@ -9,7 +9,7 @@
   padding: 1.5rem;
 
   max-width: 400px;
-  margin: 0 auto 2rem auto;
+  // margin: 0 auto 2rem auto;
 
   .form-group {
     display: flex;
@@ -144,31 +144,31 @@
   cursor: not-allowed;
 }
 
-.weather-history-chart {
-  position: relative;
-  overflow: hidden;
-  margin: 1rem auto;
-  height: 200px !important;
-  max-width: 100%;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+// .weather-history-chart {
+//   position: relative;
+//   overflow: hidden;
+//   margin: 1rem auto;
+//   height: 200px !important;
+//   max-width: 100%;
+//   background-color: #fff;
+//   border-radius: 12px;
+//   padding: 0;
+//   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 
-  &::before,
-  &::after {
-    display: none !important;
-  }
+//   &::before,
+//   &::after {
+//     display: none !important;
+//   }
 
-  canvas {
-    display: block !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
-    transform: none !important;
-  }
-}
+//   canvas {
+//     display: block !important;
+//     border-radius: 0 !important;
+//     margin: 0 !important;
+//     padding: 0 !important;
+//     background: transparent !important;
+//     transform: none !important;
+//   }
+// }
 
 .weather-results-grid {
   display: flex;

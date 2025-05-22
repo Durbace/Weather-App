@@ -1,62 +1,68 @@
-<form class="weather-history-form" (ngSubmit)="submitForm()">
-  <div class="form-group">
-    <label for="city">City:</label>
-    <input
-      id="city"
-      type="text"
-      [(ngModel)]="cityQuery"
-      (input)="onCityInput()"
-      name="city"
-      autocomplete="off"
-      required
-    />
-    <ul *ngIf="suggestions.length > 0" class="suggestions">
-      <li *ngFor="let city of suggestions" (click)="selectCity(city)">
-        {{ city.name }}, {{ city.admin1 || "" }}, {{ city.country }}
-      </li>
-    </ul>
+<div class="flex">
+  <div class="form-interval py-4">
+    <form class="weather-history-form" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label for="city">City:</label>
+        <input
+          id="city"
+          type="text"
+          [(ngModel)]="cityQuery"
+          (input)="onCityInput()"
+          name="city"
+          autocomplete="off"
+          required
+        />
+        <ul *ngIf="suggestions.length > 0" class="suggestions">
+          <li *ngFor="let city of suggestions" (click)="selectCity(city)">
+            {{ city.name }}, {{ city.admin1 || "" }}, {{ city.country }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <label for="start">Start Date:</label>
+        <input
+          type="date"
+          id="start"
+          [(ngModel)]="startDate"
+          name="start"
+          [max]="maxDate"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="end">End Date:</label>
+        <input
+          type="date"
+          id="end"
+          [(ngModel)]="endDate"
+          name="end"
+          [max]="maxDate"
+          [min]="startDate"
+          required
+        />
+      </div>
+
+      <div class="button-row">
+        <button type="submit" [disabled]="!formIsValid()">Search</button>
+        <button type="button" (click)="clearForm()" [disabled]="!formIsDirty()">
+          Clear
+        </button>
+      </div>
+    </form>
   </div>
 
-  <div class="form-group">
-    <label for="start">Start Date:</label>
-    <input
-      type="date"
-      id="start"
-      [(ngModel)]="startDate"
-      name="start"
-      [max]="maxDate"
-      required
-    />
+  <div class="w-full">
+    <p-chart
+      *ngIf="chartData"
+      type="line"
+      styleClass="w-full h-full"
+      [data]="chartData"
+      class="weather-history-chart chart-spacing-top"
+    ></p-chart>
   </div>
-
-  <div class="form-group">
-    <label for="end">End Date:</label>
-    <input
-      type="date"
-      id="end"
-      [(ngModel)]="endDate"
-      name="end"
-      [max]="maxDate"
-      [min]="startDate"
-      required
-    />
-  </div>
-
-  <div class="button-row">
-    <button type="submit" [disabled]="!formIsValid()">Search</button>
-    <button type="button" (click)="clearForm()" [disabled]="!formIsDirty()">
-      Clear
-    </button>
-  </div>
-</form>
-
-<p-chart
-  *ngIf="chartData"
-  type="line"
-  [data]="chartData"
-  class="weather-history-chart chart-spacing-top"
-></p-chart>
-
+</div>
 <div class="history-results-scroll">
   <div
     *ngIf="weatherResults.length > 0"
