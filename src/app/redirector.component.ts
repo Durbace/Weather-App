@@ -1,4 +1,3 @@
-// redirector.component.ts
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
@@ -16,9 +15,9 @@ export class RedirectorComponent {
   constructor() {
     onAuthStateChanged(this.auth, user => {
       if (user) {
-        this.router.navigate(['/home']);  // Dacă utilizatorul este autentificat, redirecționează la home
+        this.router.navigate(['/home']);
       } else {
-        this.router.navigate(['/login']);  // Dacă nu este autentificat, redirecționează la login
+        this.router.navigate(['/login']);
       }
     });
   }

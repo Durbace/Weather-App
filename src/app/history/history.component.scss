@@ -3,12 +3,13 @@
   gap: 1rem;
   grid-template-columns: 1fr;
   padding: 1rem;
-  background: transparent;
-  box-shadow: none;
-  border: none;
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
 
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto 2rem auto;
 
   .form-group {
     display: flex;
@@ -141,4 +142,73 @@
 .weather-history-form button[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.weather-history-chart {
+  position: relative;
+  overflow: hidden;
+  margin: 1rem auto;
+  height: 200px !important;
+  max-width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+  &::before,
+  &::after {
+    display: none !important;
+  }
+
+  canvas {
+    display: block !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    transform: none !important;
+  }
+}
+
+.weather-results-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.weather-entry {
+  background: #ffffff;
+  border: 1px solid #ffd2b3;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.1);
+  width: 260px;
+  flex: 1 1 260px;
+}
+
+.history-results-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 0.5rem;
+  border-radius: 12px;
+
+  scrollbar-width: thin;
+  scrollbar-color: #ff6600 #ffe8d8;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffe8d8;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 4px;
+  }
 }

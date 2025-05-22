@@ -50,35 +50,46 @@
   </div>
 </form>
 
-<div
-  *ngIf="weatherResults.length > 0"
-  class="result scrollable-result"
-  #resultsSection
->
-  <h3>Results for {{ selectedCity?.name }}</h3>
-  <div *ngFor="let entry of weatherResults">
-    <p>
-      <strong>{{ entry.date }}</strong>
-    </p>
-    <p>
-      <i class="fa fa-thermometer-full mr-2 text-orange-500"></i>
-      Max: {{ entry.tempMax }}°C |
-      <i class="fa fa-thermometer-empty ml-2 text-cyan-600"></i>
-      Min: {{ entry.tempMin }}°C
-    </p>
-    <p>
-      <i class="pi pi-send mr-2 text-blue-500"></i>
-      Wind: {{ entry.wind }} km/h
-    </p>
-    <p>
-      <i class="pi pi-sun mr-2 text-yellow-500"></i>
-      Sunrise: {{ entry.sunrise | date : "shortTime" }}
-    </p>
-    <p>
-      <i class="pi pi-moon mr-2 text-purple-400"></i>
-      Sunset: {{ entry.sunset | date : "shortTime" }}
-    </p>
+<p-chart
+  *ngIf="chartData"
+  type="line"
+  [data]="chartData"
+  class="weather-history-chart chart-spacing-top"
+></p-chart>
 
-    <hr />
+<div class="history-results-scroll">
+  <div
+    *ngIf="weatherResults.length > 0"
+    class="result scrollable-result"
+    #resultsSection
+  >
+    <h3>Results for {{ selectedCity?.name }}</h3>
+
+    <div class="weather-results-grid">
+      <div *ngFor="let entry of weatherResults" class="weather-entry">
+        <p>
+          <strong>{{ entry.date }}</strong>
+        </p>
+        <p>
+          <i class="fa fa-thermometer-full mr-2 text-orange-500"></i>
+          Max: {{ entry.tempMax }}°C |
+          <i class="fa fa-thermometer-empty ml-2 text-cyan-600"></i>
+          Min: {{ entry.tempMin }}°C
+        </p>
+        <p>
+          <i class="pi pi-send mr-2 text-blue-500"></i>
+          Wind: {{ entry.wind }} km/h
+        </p>
+        <p>
+          <i class="pi pi-sun mr-2 text-yellow-500"></i>
+          Sunrise: {{ entry.sunrise | date : "shortTime" }}
+        </p>
+        <p>
+          <i class="pi pi-moon mr-2 text-purple-400"></i>
+          Sunset: {{ entry.sunset | date : "shortTime" }}
+        </p>
+        <hr />
+      </div>
+    </div>
   </div>
 </div>

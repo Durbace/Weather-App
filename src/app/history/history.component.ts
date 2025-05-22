@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ChartModule } from 'primeng/chart';
 
 import { GeocodingService, GeoCity } from '../services/geocoding.service';
 import { WeatherService } from '../services/weather.service';
@@ -9,7 +10,7 @@ import { WeatherService } from '../services/weather.service';
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, ChartModule],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
@@ -32,6 +33,8 @@ export class HistoryComponent {
     sunrise: string;
     sunset: string;
   }[] = [];
+
+  chartData: any = null;
 
   constructor(
     private geocodingService: GeocodingService,
@@ -81,6 +84,30 @@ export class HistoryComponent {
         sunrise: data.daily.sunrise[0],
         sunset: data.daily.sunset[0],
       });
+
+      this.chartData = {
+        labels: this.weatherResults.map((entry) => entry.date),
+        datasets: [
+          {
+            label: 'Temp Min (°C)',
+            data: this.weatherResults.map((entry) => entry.tempMin),
+            borderColor: '#00bcd4',
+            fill: false,
+          },
+          {
+            label: 'Temp Max (°C)',
+            data: this.weatherResults.map((entry) => entry.tempMax),
+            borderColor: '#ff5722',
+            fill: false,
+          },
+          {
+            label: 'Wind Speed (km/h)',
+            data: this.weatherResults.map((entry) => entry.wind),
+            borderColor: '#4caf50',
+            fill: false,
+          },
+        ],
+      };
 
       if (!scrolled) {
         scrolled = true;

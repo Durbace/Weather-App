@@ -73,17 +73,25 @@
               <div class="highlight-row">
                 <div class="weather-grid">
                   <div class="weather-card temperature-card">
+                    <div class="icon-top-left">
+                      <i class="pi pi-sun text-yellow-500"></i>
+                    </div>
                     <span class="label">Temperature</span>
-                    <span class="value">
-                      {{ temperature }}°{{
+                    <span class="value"
+                      >{{ temperature }}°{{
                         (unit$ | async) === "F" ? "F" : "C"
-                      }}
-                    </span>
+                      }}</span
+                    >
                   </div>
+
                   <div class="weather-card wind-card">
+                    <div class="icon-top-left">
+                      <i class="pi pi-send text-blue-400"></i>
+                    </div>
                     <span class="label">Wind Speed</span>
                     <span class="value">{{ windSpeed }} kmh/h</span>
                   </div>
+
                   <div class="weather-icon-group">
                     <div class="weather-card weather-icon-card">
                       <span class="label">{{ currentWeather?.label }}</span>
@@ -96,6 +104,9 @@
                     </div>
 
                     <div class="weather-card uv-card">
+                      <div class="icon-top-left">
+                        <i class="pi pi-sun text-orange-500"></i>
+                      </div>
                       <span class="label">UV Index</span>
                       <span class="value">{{ uvIndex }}</span>
                     </div>
@@ -103,19 +114,31 @@
 
                   <div class="side-group">
                     <div class="weather-card sunrise-card">
+                      <div class="icon-top-left">
+                        <i class="pi pi-arrow-up text-yellow-500"></i>
+                      </div>
                       <span class="label">Sunrise</span>
                       <span class="value">{{ sunrise }}</span>
                     </div>
+
                     <div class="weather-card sunset-card">
+                      <div class="icon-top-left">
+                        <i class="pi pi-arrow-down text-purple-500"></i>
+                      </div>
                       <span class="label">Sunset</span>
                       <span class="value">{{ sunset }}</span>
                     </div>
+
                     <div class="weather-card humidity-card">
+                      <div class="icon-top-left">
+                        <i class="pi pi-sliders-h text-teal-500"></i>
+                      </div>
                       <span class="label">Humidity</span>
                       <span class="value">{{ humidity }}%</span>
                     </div>
                   </div>
                 </div>
+
                 <div class="chart-container">
                   <div class="highlight-chart-wrapper">
                     <p-chart
@@ -123,7 +146,8 @@
                       [data]="chartData"
                       [style.width]="'100%'"
                       [style.height]="'350px'"
-                    ></p-chart>
+                    >
+                    </p-chart>
                   </div>
                 </div>
               </div>
@@ -139,10 +163,12 @@
         </ng-template>
       </p-card>
     </div>
-    <div class="highlight-section-box no-blur">
-      <h3 class="highlight-title">Weather History Search</h3>
-      <div class="history-scroll-wrapper">
-        <app-history></app-history>
+    <div class="highlight-section-box">
+      <div class="highlight-inner-wrapper">
+        <h3 class="highlight-title">Weather History Search</h3>
+        <div class="history-scroll-wrapper">
+          <app-history></app-history>
+        </div>
       </div>
     </div>
   </div>
