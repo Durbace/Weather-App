@@ -53,9 +53,17 @@
     </form>
   </div>
 
-  <div class="w-full">
+  <div
+    class="w-full flex align-items-center justify-content-center text-center px-4"
+    *ngIf="!chartData"
+  >
+    <p class="weather-placeholder-text">
+      Enter a city and a date range to discover what the weather was like.
+    </p>
+  </div>
+
+  <div class="w-full" *ngIf="chartData">
     <p-chart
-      *ngIf="chartData"
       type="line"
       styleClass="w-full h-full"
       [data]="chartData"
@@ -76,6 +84,7 @@
         <p>
           <strong>{{ entry.date }}</strong>
         </p>
+        <hr />
         <p>
           <i class="fa fa-thermometer-full mr-2 text-orange-500"></i>
           Max: {{ entry.tempMax }}°C |
@@ -94,7 +103,6 @@
           <i class="pi pi-moon mr-2 text-purple-400"></i>
           Sunset: {{ entry.sunset | date : "shortTime" }}
         </p>
-        <hr />
       </div>
     </div>
   </div>

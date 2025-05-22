@@ -144,32 +144,6 @@
   cursor: not-allowed;
 }
 
-// .weather-history-chart {
-//   position: relative;
-//   overflow: hidden;
-//   margin: 1rem auto;
-//   height: 200px !important;
-//   max-width: 100%;
-//   background-color: #fff;
-//   border-radius: 12px;
-//   padding: 0;
-//   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-
-//   &::before,
-//   &::after {
-//     display: none !important;
-//   }
-
-//   canvas {
-//     display: block !important;
-//     border-radius: 0 !important;
-//     margin: 0 !important;
-//     padding: 0 !important;
-//     background: transparent !important;
-//     transform: none !important;
-//   }
-// }
-
 .weather-results-grid {
   display: flex;
   flex-wrap: wrap;
@@ -211,4 +185,14 @@
     background: #ff6600;
     border-radius: 4px;
   }
+}
+
+.weather-placeholder-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.4); 
+  max-width: 480px;
+  margin-top: 2rem;
+  line-height: 1.6;
+  text-align: center;
 }
