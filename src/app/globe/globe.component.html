@@ -23,29 +23,27 @@
 
     <div *ngIf="weather(); else loading">
       <p>
-        <i class="pi pi-sun mr-2"></i>
+        <i class="fa fa-thermometer-full mr-2 text-orange-500"></i>
         <strong>Temperature:</strong>
-        {{ convertTemperature(weather().temperature) | number : "1.0-1" }}
-        °{{ unit() }}
+        {{ convertTemperature(weather().temperature) | number : "1.0-1" }} °{{
+          unit()
+        }}
       </p>
+
       <p>
-        <i class="pi pi-send mr-2"></i>
+        <i class="fa fa-wind mr-2 text-blue-500"></i>
         <strong>Windspeed:</strong> {{ weather().windspeed }} km/h
       </p>
+
       <p>
-        <i class="pi pi-arrow-up mr-2"></i>
+        <i class="pi pi-sun mr-2 text-yellow-500"></i>
         <strong>Sunrise:</strong> {{ sunrise() }}
       </p>
       <p>
-        <i class="pi pi-arrow-down mr-2"></i>
+        <i class="pi pi-moon mr-2 text-purple-400"></i>
         <strong>Sunset:</strong> {{ sunset() }}
       </p>
-      <p>
-        <i [ngClass]="icon() + ' mr-2'"></i>
-        <strong>{{ label() }}</strong>
-      </p>
     </div>
-
     <ng-template #loading>
       <p>Loading weather...</p>
     </ng-template>
