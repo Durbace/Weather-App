@@ -111,13 +111,18 @@ export class HomepageComponent {
   ) {}
 
   async ngOnInit() {
-    const location = await this.locationService.getCityAndCountry();
-    this.cityName = location.city;
-    this.countryName = location.country;
-    this.latitude = location.lat;
-    this.longitude = location.lon;
+    const savedCity = localStorage.getItem('selectedCity');
 
-    this.isLoadingLocation = false;
+    if (savedCity) {
+      const city: GeoCity = JSON.parse(savedCity);
+      this.cityName = city.name;
+      this.countryName = city.country;
+      this.latitude = city.latitude;
+      this.longitude = city.longitude;
+      this.isLoadingLocation = false;
+    } else {
+      await this.refreshCurrentLocation();
+    }
 
     await this.loadWeatherData();
     await this.loadHistoricalChart();
@@ -389,6 +394,7 @@ export class HomepageComponent {
     this.countryName = city.country;
     this.latitude = city.latitude;
     this.longitude = city.longitude;
+    localStorage.setItem('selectedCity', JSON.stringify(city));
 
     this.loadWeatherData();
     this.loadHistoricalChart();
@@ -407,5 +413,22 @@ export class HomepageComponent {
     if ([95, 96, 99].includes(this.weatherCode)) return '/thunderstorm.jpg';
 
     return null;
+  }
+
+  async refreshCurrentLocation() {
+    this.isLoadingLocation = true;
+
+    const location = await this.locationService.getCityAndCountry();
+    this.cityName = location.city;
+    this.countryName = location.country;
+    this.latitude = location.lat;
+    this.longitude = location.lon;
+
+    this.isLoadingLocation = false;
+
+    localStorage.removeItem('selectedCity');
+
+    await this.loadWeatherData();
+    await this.loadHistoricalChart();
   }
 }

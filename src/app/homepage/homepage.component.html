@@ -30,7 +30,16 @@
                 ></div>
 
                 <div class="location-text">
-                  <span>Current Location</span>
+                  <span
+                    (click)="refreshCurrentLocation()"
+                    style="
+                      cursor: pointer;
+                      text-decoration: underline;
+                      color: #add8e6;
+                    "
+                  >
+                    Current Location
+                  </span>
                   <h2>{{ cityName }}</h2>
                   <h1>{{ countryName }}</h1>
                 </div>
