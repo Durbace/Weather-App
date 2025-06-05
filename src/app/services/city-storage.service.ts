@@ -8,8 +8,14 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { Auth, authState } from '@angular/fire/auth';
-import { City } from './city.service';
 import { firstValueFrom } from 'rxjs';
+
+export interface City {
+  id?: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class CityStorageService {

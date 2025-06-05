@@ -112,6 +112,7 @@ export class HomepageComponent {
 
   async ngOnInit() {
     const savedCity = localStorage.getItem('selectedCity');
+    const user = await firstValueFrom(authState(this.auth));
 
     if (savedCity) {
       const city: GeoCity = JSON.parse(savedCity);
@@ -123,6 +124,10 @@ export class HomepageComponent {
     } else {
       await this.refreshCurrentLocation();
     }
+
+    if (user) {
+    this.checkIfFavorite(user.uid);
+  }
 
     await this.loadWeatherData();
     await this.loadHistoricalChart();
@@ -390,15 +395,23 @@ export class HomepageComponent {
   }
 
   onCitySelected(city: GeoCity) {
-    this.cityName = city.name;
-    this.countryName = city.country;
-    this.latitude = city.latitude;
-    this.longitude = city.longitude;
-    localStorage.setItem('selectedCity', JSON.stringify(city));
+  this.cityName = city.name;
+  this.countryName = city.country;
+  this.latitude = city.latitude;
+  this.longitude = city.longitude;
+  localStorage.setItem('selectedCity', JSON.stringify(city));
 
-    this.loadWeatherData();
-    this.loadHistoricalChart();
-  }
+  this.loadWeatherData();
+  this.loadHistoricalChart();
+
+  firstValueFrom(authState(this.auth)).then((user) => {
+    if (user) {
+      this.checkIfFavorite(user.uid);
+    } else {
+      this.isFavorite = false;
+    }
+  });
+}
 
   getWeatherBackgroundImage(): string | null {
     if (this.weatherCode === undefined) return null;

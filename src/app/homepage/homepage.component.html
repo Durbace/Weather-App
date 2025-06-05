@@ -28,7 +28,17 @@
                       'url(' + getWeatherBackgroundImage() + ')'
                   }"
                 ></div>
-
+                <button
+                  class="favorite-button"
+                  (click)="toggleFavorite()"
+                  [ngClass]="{ filled: isFavorite }"
+                  aria-label="Toggle favorite"
+                >
+                  <i
+                    class="pi"
+                    [ngClass]="isFavorite ? 'pi-heart-fill' : 'pi-heart'"
+                  ></i>
+                </button>
                 <div class="location-text">
                   <span
                     (click)="refreshCurrentLocation()"
