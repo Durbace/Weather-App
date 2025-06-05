@@ -72,3 +72,43 @@ $shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.1);
     pointer-events: none;
   }
 }
+
+@media (max-width: 768px) {
+  .search-bar {
+    width: 100%;
+    margin: 0.5rem auto;
+
+    .custom-input {
+      font-size: 0.95rem;
+      padding: 10px 36px 10px 16px;
+    }
+
+    .suggestion-list {
+      font-size: 0.95rem;
+      max-height: 160px;
+    }
+
+    .search-icon {
+      top: 9px;
+      right: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    .custom-input {
+      font-size: 0.85rem;
+      padding: 8px 32px 8px 14px;
+    }
+
+    .search-icon {
+      font-size: 12px;
+    }
+
+    .suggestion-list {
+      font-size: 0.85rem;
+    }
+  }
+}

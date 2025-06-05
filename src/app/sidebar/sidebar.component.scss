@@ -140,6 +140,7 @@ $logout-hover: #e25f07;
   color: $primary-orange !important;
 }
 
+// Adăugate de colegi – toggle unit & globe
 .unit-toggle {
   display: flex;
   align-items: center;
@@ -185,7 +186,7 @@ $logout-hover: #e25f07;
       }
     }
 
-    input:checked + .slider {
+    input:checked+.slider {
       background-color: $primary-orange;
 
       &:before {
@@ -215,5 +216,80 @@ $logout-hover: #e25f07;
 
   &:hover {
     background-color: #f0f0f0;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 80%;
+  }
+
+  .sidebar {
+    padding: 1rem 0.75rem;
+    width: 100%;
+
+    .menu,
+    .favorites,
+    .globe {
+      padding: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .sidebar-footer {
+      .user-info {
+        span {
+          font-size: 0.9rem;
+        }
+      }
+
+      .logout-btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.75rem;
+      }
+    }
+
+    .unit-toggle {
+      flex-direction: row;
+      justify-content: space-between;
+
+      .unit-label {
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+      }
+    }
+
+    .sidebar-header {
+      .close-btn {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-container {
+    width: 100%;
+  }
+
+  .sidebar {
+
+    .menu,
+    .favorites,
+    .globe {
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .sidebar-footer {
+      .logout-btn {
+        width: 100%;
+      }
+    }
+
+    .unit-toggle {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
   }
 }
