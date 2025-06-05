@@ -161,6 +161,7 @@ export class HomepageComponent {
         this.weatherService.getHistoricalWeather(
           this.latitude,
           this.longitude,
+          date,
           date
         )
       );
@@ -383,6 +384,7 @@ export class HomepageComponent {
         this.weatherService.getHistoricalWeather(
           this.latitude,
           this.longitude,
+          date,
           date
         )
       );

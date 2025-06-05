@@ -58,69 +58,62 @@ export class HistoryComponent {
   }
 
   async submitForm() {
-    this.weatherResults = [];
+  this.weatherResults = [];
+  this.chartData = null;
 
-    if (!this.selectedCity || !this.startDate || !this.endDate) return;
+  if (!this.selectedCity || !this.startDate || !this.endDate) return;
 
-    const current = new Date(this.startDate);
-    const end = new Date(this.endDate);
-    let scrolled = false;
+  const data = await this.weatherService
+    .getHistoricalWeather(
+      this.selectedCity.latitude,
+      this.selectedCity.longitude,
+      this.startDate,
+      this.endDate
+    )
+    .toPromise();
 
-    while (current <= end) {
-      const dateStr = current.toISOString().split('T')[0];
-      const data = await this.weatherService
-        .getHistoricalWeather(
-          this.selectedCity.latitude,
-          this.selectedCity.longitude,
-          dateStr
-        )
-        .toPromise();
+  const days = data.daily.time.length;
 
-      this.weatherResults.push({
-        date: dateStr,
-        tempMin: data.daily.temperature_2m_min[0],
-        tempMax: data.daily.temperature_2m_max[0],
-        wind: data.daily.windspeed_10m_max[0],
-        sunrise: data.daily.sunrise[0],
-        sunset: data.daily.sunset[0],
-      });
-
-      this.chartData = {
-        labels: this.weatherResults.map((entry) => entry.date),
-        datasets: [
-          {
-            label: 'Temp Min (°C)',
-            data: this.weatherResults.map((entry) => entry.tempMin),
-            borderColor: '#00bcd4',
-            fill: false,
-          },
-          {
-            label: 'Temp Max (°C)',
-            data: this.weatherResults.map((entry) => entry.tempMax),
-            borderColor: '#ff5722',
-            fill: false,
-          },
-          {
-            label: 'Wind Speed (km/h)',
-            data: this.weatherResults.map((entry) => entry.wind),
-            borderColor: '#4caf50',
-            fill: false,
-          },
-        ],
-      };
-
-      if (!scrolled) {
-        scrolled = true;
-        setTimeout(() => {
-          this.resultsSection?.nativeElement.scrollIntoView({
-            behavior: 'smooth',
-          });
-        }, 50);
-      }
-
-      current.setDate(current.getDate() + 1);
-    }
+  for (let i = 0; i < days; i++) {
+    this.weatherResults.push({
+      date: data.daily.time[i],
+      tempMin: data.daily.temperature_2m_min[i],
+      tempMax: data.daily.temperature_2m_max[i],
+      wind: data.daily.windspeed_10m_max[i],
+      sunrise: data.daily.sunrise[i],
+      sunset: data.daily.sunset[i],
+    });
   }
+
+  this.chartData = {
+    labels: this.weatherResults.map((entry) => entry.date),
+    datasets: [
+      {
+        label: 'Temp Min (°C)',
+        data: this.weatherResults.map((entry) => entry.tempMin),
+        borderColor: '#00bcd4',
+        fill: false,
+      },
+      {
+        label: 'Temp Max (°C)',
+        data: this.weatherResults.map((entry) => entry.tempMax),
+        borderColor: '#ff5722',
+        fill: false,
+      },
+      {
+        label: 'Wind Speed (km/h)',
+        data: this.weatherResults.map((entry) => entry.wind),
+        borderColor: '#4caf50',
+        fill: false,
+      },
+    ],
+  };
+
+  setTimeout(() => {
+    this.resultsSection?.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }, 50);
+}
+
 
   clearForm() {
     this.cityQuery = '';
